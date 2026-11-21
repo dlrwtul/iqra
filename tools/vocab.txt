@@ -1,0 +1,339 @@
+# Vocabulaire du parcours Iqra
+# Format : id | arabe | translittération | sens (français) | lemme du corpus | note
+#  - lemme : lemme exact du Quranic Arabic Corpus (plusieurs séparés par des virgules)
+#    PRON:3MS… = pronom ; AFX:… = préfixe ; SUFF:… = pronom suffixe ; DEM:near/far/plfar = démonstratifs
+# Les lignes « @ lXX » indiquent la leçon à laquelle les mots suivants appartiennent.
+
+@ l01
+allah | اللَّه | Allâh | Allah (Dieu) | اللَّه | Le Nom propre de Dieu, le mot plein le plus fréquent du Coran.
+ism | اسْم | ism | nom | اسْم | Dans بِسْمِ : bi + ism = « au nom de ».
+bi | بِـ | bi- | par, avec, au nom de | AFX:bi | Préfixe collé au mot suivant : بِسْمِ، بِاللَّهِ.
+li | لِـ | li- | à, pour, appartient à | AFX:li | Préfixe : لِلَّهِ = « à Allah, pour Allah ».
+al | الـ | al- | le, la, les | AFX:al | L'article défini, collé au nom.
+rahman | رَحْمٰن | raḥmân | le Tout Miséricordieux | رَحْمٰن | Miséricorde immense qui englobe toute la création.
+rahim | رَحِيم | raḥîm | le Très Miséricordieux | رَحِيم | Miséricorde constante et particulière envers les croyants.
+rahma | رَحْمَة | raḥma | miséricorde | رَحْمَة | Même racine ر ح م que raḥmân et raḥîm.
+hamd | حَمْد | ḥamd | louange | حَمْد |
+rabb | رَبّ | rabb | Seigneur, Maître | رَبّ | Celui qui possède, crée, nourrit et fait grandir.
+alam | عالَم | ʿâlam (pl. ʿâlamîn) | monde ; les mondes | عالَم | الْعَالَمِينَ = tous les mondes, toute la création.
+
+@ l02
+malik | مالِك | mâlik | Maître, possesseur | مالِك |
+yawm | يَوْم | yawm | jour | يَوْم |
+din | دِين | dîn | religion ; rétribution | دِين | يَوْمِ الدِّينِ = le Jour de la Rétribution (du Jugement).
+iyya | إِيّا | iyyâ- | (support de pronom) | إِيّا | إِيَّاكَ = « toi (seul) », placé en tête pour l'exclusivité.
+abada | عَبَدَ | ʿabada / yaʿbudu | adorer | عَبَدَ | نَعْبُدُ = nous adorons.
+abd | عَبْد | ʿabd (pl. ʿibâd) | serviteur, adorateur | عَبْد |
+istaana | اسْتَعانَ | istaʿâna / yastaʿînu | demander l'aide | اسْتَعِينُ | نَسْتَعِينُ = nous demandons l'aide.
+wa | وَ | wa- | et | AFX:wa | Le préfixe le plus fréquent du Coran.
+
+@ l03
+hada | هَدَى | hadâ / yahdî | guider | هَدَى | اهْدِنَا = guide-nous.
+sirat | صِراط | ṣirâṭ | chemin, voie | صِراط |
+mustaqim | مُسْتَقِيم | mustaqîm | droit | مُسْتَقِيم |
+alladhi | الَّذِي | alladhî / alladhîna | celui qui ; ceux qui | الَّذِي | Féminin : الَّتِي (celle qui).
+anama | أَنْعَمَ | anʿama | combler de bienfaits | أَنْعَمَ |
+ala | عَلَى | ʿalâ | sur, contre | عَلَى | عَلَيْهِمْ = sur eux.
+ghayr | غَيْر | ghayr | autre que, non | غَيْر |
+maghdub | مَغْضُوب | maghḍûb | objet de la colère | مَغْضُوب |
+dall | ضالّ | ḍâll (pl. ḍâllîn) | égaré | ضالّ |
+la | لا | lâ | non ; ne… pas | لا |
+
+@ l04
+min | مِنْ | min | de, parmi | مِن | Le mot le plus fréquent du Coran après les préfixes.
+fi | فِي | fî | dans, en | فِي |
+ila | إِلَى | ilâ | vers, jusqu'à | إِلَى |
+an_prep | عَنْ | ʿan | de, au sujet de | عَن |
+maa | مَعَ | maʿa | avec | مَع |
+inda | عِنْدَ | ʿinda | auprès de, chez | عِند |
+bayna | بَيْنَ | bayna | entre | بَيْن |
+hatta | حَتَّى | ḥattâ | jusqu'à ce que | حَتَّى |
+fa | فَـ | fa- | alors, donc | AFX:fa | Préfixe de conséquence ou de suite.
+ka | كَـ | ka- | comme | AFX:ka |
+
+@ l05
+ma | مَا | mâ | ce que ; ne… pas ; quoi ? | ما | Trois sens selon le contexte.
+lam | لَمْ | lam | ne… pas (passé) | لَم | لَمْ + verbe au présent = négation du passé.
+lan | لَنْ | lan | ne… jamais (futur) | لَن |
+laysa | لَيْسَ | laysa | n'est pas | لَيْسَ |
+inna | إِنَّ | inna | certes, en vérité | إِنّ |
+qad | قَدْ | qad | certes, déjà | قَد |
+illa | إِلَّا | illâ | sauf, si ce n'est | إِلّا |
+bal | بَلْ | bal | mais plutôt | بَل |
+ilah | إِلٰه | ilâh | divinité | إِلٰه | لَا إِلٰهَ إِلَّا اللَّهُ = pas de divinité sauf Allah.
+
+@ l06
+thumma | ثُمَّ | thumma | puis, ensuite | ثُمّ |
+aw | أَوْ | aw | ou | أَو |
+in | إِنْ | in | si | إِن |
+law | لَوْ | law | si (irréel) | لَو |
+idha | إِذَا | idhâ | quand, lorsque | إِذا |
+idh | إِذْ | idh | lorsque (au passé) | إِذ |
+an | أَنْ | an | que, de (+ verbe) | أَن |
+anna | أَنَّ | anna | que (+ nom) | أَنّ |
+lakin | لٰكِنَّ | lâkinna | mais | لٰكِنّ,لٰكِن |
+lamma | لَمَّا | lammâ | lorsque | لَمّا |
+laalla | لَعَلَّ | laʿalla | afin que, peut-être | لَعَلّ | لَعَلَّكُمْ تَتَّقُونَ = afin que vous soyez pieux.
+
+@ l07
+asr | عَصْر | ʿaṣr | le Temps ; l'après-midi | عَصْر |
+insan | إِنْسان | insân | l'être humain | إِنسان |
+la_emph | لَـ | la- | certes, assurément | AFX:la | Préfixe d'insistance : لَفِي = « est certes dans ».
+khusr | خُسْر | khusr | perte | خُسْر |
+amana | آمَنَ | âmana / yuʾminu | croire, avoir la foi | آمَنَ |
+amila | عَمِلَ | ʿamila / yaʿmalu | faire, œuvrer | عَمِلَ |
+saliha | صالِحَة | ṣâliḥa (pl. ṣâliḥât) | bonne œuvre | صالِحَة |
+tawasaw | تَواصَوْا | tawâṣaw | se recommander mutuellement | تَواصَ |
+haqq | حَقّ | ḥaqq | vérité ; droit | حَقّ |
+sabr | صَبْر | ṣabr | patience, endurance | صَبْر |
+
+@ l08
+huwa | هُوَ | huwa | il, lui | PRON:3MS | Aussi collé : لَهُ (à lui), بِهِ (par lui).
+hiya | هِيَ | hiya | elle | PRON:3FS |
+hum | هُمْ | hum | ils, eux | PRON:3MP |
+anta | أَنْتَ | anta | tu, toi | PRON:2MS |
+antum | أَنْتُمْ | antum | vous | PRON:2MP |
+ana | أَنَا | anâ | je, moi | PRON:1S |
+nahnu | نَحْنُ | naḥnu | nous | PRON:1P |
+
+@ l09
+s_hu | ـهُ / ـهِ | -hu / -hi | son, sa ; le, lui | SUFF:3MS | رَبُّهُ = son Seigneur.
+s_ha | ـهَا | -hâ | son, sa (à elle) ; la | SUFF:3FS | فِيهَا = en elle, dedans.
+s_hum | ـهُمْ / ـهِمْ | -hum / -him | leur ; les, eux | SUFF:3MP | عَلَيْهِمْ = sur eux.
+s_ka | ـكَ | -ka | ton, ta ; te | SUFF:2MS | رَبُّكَ = ton Seigneur.
+s_kum | ـكُمْ | -kum | votre ; vous | SUFF:2MP | رَبُّكُمْ = votre Seigneur.
+s_i | ـي | -î | mon, ma ; me | SUFF:1S | رَبِّي = mon Seigneur.
+s_na | ـنَا | -nâ | notre ; nous | SUFF:1P | رَبَّنَا = ô notre Seigneur.
+
+@ l10
+hadha | هٰذَا | hâdhâ (fém. hâdhihi) | ceci, celui-ci | DEM:near | Pluriel : هٰؤُلَاءِ (ceux-ci).
+dhalika | ذٰلِكَ | dhâlika (fém. tilka) | cela, celui-là | DEM:far |
+ulaika | أُولٰئِكَ | ulâʾika | ceux-là | DEM:plfar |
+man | مَنْ | man | qui ? ; celui qui | مَن |
+kayfa | كَيْفَ | kayfa | comment ? | كَيْف |
+hal | هَلْ | hal | est-ce que ? | هَل |
+a_q | أَ | a- | est-ce que ? (préfixe) | AFX:a | أَلَمْ = est-ce que… ne… pas ?
+am | أَمْ | am | ou bien ? | أَم |
+ayy | أَيّ | ayy | quel ? ; ô (yâ ayyuhâ) | أَيّ |
+madha | مَاذَا | mâdhâ | quoi ? qu'est-ce que ? | ماذا |
+kull | كُلّ | kull | tout, chaque | كُلّ |
+bad_ | بَعْض | baʿḍ | certains, une partie | بَعْض |
+
+@ l11
+qala | قَالَ | qâla / yaqûlu (qul !) | dire ; « dis ! » | قالَ | قُلْ = dis ! — l'un des verbes les plus fréquents.
+ahad | أَحَد | aḥad | un, unique ; quelqu'un | أَحَد |
+samad | صَمَد | ṣamad | l'Absolu, que tous implorent | صَمَد |
+walada | وَلَدَ | walada / yalidu | engendrer | وَلَدَ |
+kana | كَانَ | kâna / yakûnu | être, exister | كانَ |
+kufu | كُفُو | kufuw | égal, équivalent | كُفُو |
+
+@ l12
+kafara | كَفَرَ | kafara / yakfuru | mécroire, renier | كَفَرَ |
+jaala | جَعَلَ | jaʿala / yajʿalu | faire, rendre, placer | جَعَلَ |
+khalaqa | خَلَقَ | khalaqa / yakhluqu | créer | خَلَقَ |
+alima | عَلِمَ | ʿalima / yaʿlamu | savoir, connaître | عَلِمَ |
+faala | فَعَلَ | faʿala / yafʿalu | faire | فَعَلَ | Le verbe-modèle des grammairiens arabes.
+jaa | جَاءَ | jâʾa / yajîʾu | venir | جاءَ |
+ata | أَتَى | atâ / yaʾtî | venir ; apporter (bi) | أَتَى |
+aata | آتَى | âtâ / yuʾtî | donner | آتَى |
+raa | رَأَى | raʾâ / yarâ | voir | رَأَى |
+shaa | شَاءَ | shâʾa / yashâʾu | vouloir | شاءَ | إِنْ شَاءَ اللَّهُ = si Allah veut.
+
+@ l13
+anzala | أَنْزَلَ | anzala / yunzilu | faire descendre, révéler | أَنزَلَ |
+arsala | أَرْسَلَ | arsala / yursilu | envoyer | أَرْسَلَ |
+kadhdhaba | كَذَّبَ | kadhdhaba | démentir, traiter de menteur | كَذَّبَ |
+daa | دَعَا | daʿâ / yadʿû | invoquer, appeler | دَعا |
+arada | أَرَادَ | arâda / yurîdu | vouloir | أَرادَ |
+zalama | ظَلَمَ | ẓalama / yaẓlimu | être injuste, léser | ظَلَمَ |
+akhadha | أَخَذَ | akhadha / yaʾkhudhu | prendre, saisir | أَخَذَ |
+ittakhadha | اتَّخَذَ | ittakhadha | prendre pour, adopter | اتَّخَذَ |
+wajada | وَجَدَ | wajada / yajidu | trouver | وَجَدَ |
+saala | سَأَلَ | saʾala / yasʾalu | demander, interroger | سَأَلَ |
+
+@ l14
+aata2 | أَعْطَى | aʿṭâ / yuʿṭî | donner, accorder | أَعْطَى | أَعْطَيْنَاكَ = Nous t'avons donné.
+kawthar | كَوْثَر | kawthar | l'Abondance (al-Kawthar) | كَوْثَر |
+salla | صَلَّى | ṣallâ / yuṣallî | prier, faire la ṣalât | صَلَّى |
+inhar | انْحَرْ | inḥar | sacrifie ! | انْحَرْ |
+shani | شانِئ | shâniʾ | celui qui hait | شانِئ |
+abtar | أَبْتَر | abtar | privé de postérité | أَبْتَر |
+
+@ l15
+nasr | نَصْر | naṣr | secours, victoire | نَصْر |
+fath | فَتْح | fatḥ | victoire, ouverture | فَتْح |
+nas | نَاس | nâs | les gens, les hommes | ناس |
+dakhala | دَخَلَ | dakhala / yadkhulu | entrer | دَخَلَ |
+fawj | فَوْج | fawj (pl. afwâj) | foule, groupe | فَوْج |
+sabbaha | سَبَّحَ | sabbaḥa / yusabbiḥu | glorifier | سَبَّحَ | سُبْحَانَ اللَّهِ = gloire à Allah.
+istaghfara | اسْتَغْفَرَ | istaghfara | demander pardon | اسْتَغْفَرَ | أَسْتَغْفِرُ اللَّهَ = je demande pardon à Allah.
+tawwab | تَوَّاب | tawwâb | Celui qui accueille le repentir | تَوّاب |
+
+@ l16
+ittaqa | اتَّقَى | ittaqâ / yattaqî | craindre Allah, se prémunir | اتَّقَى | De là vient taqwâ (piété).
+ittabaa | اتَّبَعَ | ittabaʿa / yattabiʿu | suivre | اتَّبَعَ |
+nazara | نَظَرَ | naẓara / yanẓuru | regarder | نَظَرَ |
+dhakara | ذَكَرَ | dhakara / yadhkuru | se souvenir, mentionner | ذَكَرَ |
+samia | سَمِعَ | samiʿa / yasmaʿu | entendre | سَمِعَ |
+rajaa | رَجَعَ | rajaʿa / yarjiʿu | revenir, retourner | رَجَعَ | إِلَيْهِ رَاجِعُونَ = vers Lui nous retournons.
+aqala | عَقَلَ | ʿaqala / yaʿqilu | raisonner, comprendre | عَقَلُ | أَفَلَا تَعْقِلُونَ = ne raisonnez-vous donc pas ?
+shakara | شَكَرَ | shakara / yashkuru | remercier, être reconnaissant | شَكَرَ |
+sawfa | سَوْفَ | sawfa | (marque du futur) | سَوْف |
+sa | سَـ | sa- | (futur proche) | AFX:sa | سَيَعْلَمُونَ = ils sauront.
+
+@ l17
+ataa | أَطَاعَ | aṭâʿa / yuṭîʿu | obéir | أَطاعَ | أَطِيعُوا = obéissez !
+khafa | خَافَ | khâfa / yakhâfu | avoir peur, craindre | خافَ |
+akala | أَكَلَ | akala / yaʾkulu | manger | أَكَلَ |
+qatala | قَتَلَ | qatala / yaqtulu | tuer | قَتَلَ |
+amara | أَمَرَ | amara / yaʾmuru | ordonner | أَمَرَ |
+ghafara | غَفَرَ | ghafara / yaghfiru | pardonner | غَفَرَ |
+sabara | صَبَرَ | ṣabara / yaṣbiru | patienter, endurer | صَبَرَ |
+anfaqa | أَنْفَقَ | anfaqa / yunfiqu | dépenser (dans le bien) | أَنفَقَ |
+taba | تَابَ | tâba / yatûbu | se repentir | تابَ |
+aqama | أَقَامَ | aqâma / yuqîmu | accomplir, établir | أَقامَ | أَقِيمُوا الصَّلَاةَ = accomplissez la prière.
+
+@ l18
+kafir | كَافِر | kâfir (pl. kâfirûn) | mécréant, négateur | كافِر |
+abid | عَابِد | ʿâbid (pl. ʿâbidûn) | adorateur | عابِد |
+ya | يَا | yâ | ô ! (appel) | AFX:ya | يَا أَيُّهَا = ô vous…
+
+@ l19
+ard | أَرْض | arḍ | terre | أَرْض |
+samaa | سَمَاء | samâʾ (pl. samâwât) | ciel | سَماء |
+shay | شَيْء | shayʾ | chose | شَىْء | عَلَى كُلِّ شَيْءٍ قَدِيرٌ = capable de toute chose.
+layl | لَيْل | layl | nuit | لَيْل |
+nahar | نَهَار | nahâr | jour (clarté) | نَهار |
+maa_ | مَاء | mâʾ | eau | ماء |
+shams | شَمْس | shams | soleil | شَمْس |
+qamar | قَمَر | qamar | lune | قَمَر |
+bahr | بَحْر | baḥr | mer | بَحْر |
+jabal | جَبَل | jabal (pl. jibâl) | montagne | جَبَل |
+dunya | دُنْيَا | dunyâ | la vie d'ici-bas | دُنْيا |
+
+@ l20
+qawm | قَوْم | qawm | peuple | قَوْم |
+nafs | نَفْس | nafs (pl. anfus) | âme, soi | نَفْس |
+ahl | أَهْل | ahl | gens, famille | أَهْل | أَهْلُ الْكِتَابِ = les gens du Livre.
+rasul | رَسُول | rasûl (pl. rusul) | messager | رَسُول |
+nabi | نَبِيّ | nabiyy | prophète | نَبِيّ |
+mumin | مُؤْمِن | muʾmin | croyant | مُؤْمِن |
+ab | أَب | ab (pl. âbâʾ) | père ; ancêtres | أَب,آباء |
+ibn | ابْن | ibn ; banû | fils ; enfants de | ابْن,بُنَىّ | بَنِي إِسْرَائِيلَ = les enfants d'Israël.
+akh | أَخ | akh | frère | أَخ |
+zawj | زَوْج | zawj (pl. azwâj) | époux, épouse ; couple | زَوْج |
+nisa | نِسَاء | nisâʾ | femmes | نِساء |
+rajul | رَجُل | rajul (pl. rijâl) | homme | رَجُل,رِجال |
+
+@ l21
+kitab | كِتَاب | kitâb | livre, Écriture | كِتاب |
+aya | آيَة | âya (pl. âyât) | signe ; verset | آيَة |
+quran | قُرْآن | qurʾân | le Coran (la Lecture) | قُرْءان |
+dhikr | ذِكْر | dhikr | rappel, souvenir | ذِكْر |
+huda | هُدًى | hudâ | guidée | هُدًى |
+malak | مَلَك | malak (pl. malâʾika) | ange | مَلَك |
+shaytan | شَيْطَان | shayṭân | diable, Satan | شَيْطان |
+salat | صَلَاة | ṣalât | prière | صَلاة |
+zakat | زَكَاة | zakât | aumône purificatrice | زَكاة |
+iman | إِيمَان | îmân | foi | إِيمان |
+ilm | عِلْم | ʿilm | savoir, science | عِلْم |
+wali | وَلِيّ | waliyy | allié, protecteur | وَلِيّ |
+
+@ l22
+akhir | آخِر | âkhir ; al-âkhira | dernier ; l'au-delà | آخِر | الْيَوْمِ الْآخِرِ = le Jour dernier.
+adhab | عَذَاب | ʿadhâb | châtiment | عَذاب |
+janna | جَنَّة | janna (pl. jannât) | jardin, Paradis | جَنَّة |
+nar | نَار | nâr | feu, Enfer | نار |
+jahannam | جَهَنَّم | jahannam | la Géhenne | جَهَنَّم |
+ajr | أَجْر | ajr | récompense, salaire | أَجْر |
+khayr | خَيْر | khayr | bien ; meilleur | خَيْر |
+sharr | شَرّ | sharr | mal | شَرّ |
+fadl | فَضْل | faḍl | grâce, faveur | فَضْل |
+khalid | خَالِد | khâlid (pl. khâlidûn) | éternel, y demeurant | خالِد |
+alim_p | أَلِيم | alîm | douloureux | أَلِيم |
+qiyama | قِيَامَة | qiyâma | la Résurrection | قِيامَة | يَوْمَ الْقِيَامَةِ = le Jour de la Résurrection.
+ashab | أَصْحَاب | aṣḥâb | compagnons, gens de | أَصْحاب | أَصْحَابُ الْجَنَّةِ = les gens du Paradis.
+
+@ l23
+qabl | قَبْل | qabl | avant | قَبْل |
+bad | بَعْد | baʿd | après | بَعْد |
+dun | دُون | dûn | en dehors de, au lieu de | دُون |
+fawq | فَوْق | fawq | au-dessus de | فَوْق |
+taht | تَحْت | taḥt | sous, au-dessous | تَحْت | تَجْرِي مِنْ تَحْتِهَا الْأَنْهَارُ = sous lesquels coulent les rivières.
+amr | أَمْر | amr | ordre ; affaire | أَمْر |
+sabil | سَبِيل | sabîl | chemin, voie | سَبِيل | فِي سَبِيلِ اللَّهِ = dans le chemin d'Allah.
+qalb | قَلْب | qalb (pl. qulûb) | cœur | قَلْب |
+yad | يَد | yad (pl. aydî) | main | يَد |
+wajh | وَجْه | wajh | visage | وَجْه |
+ayn | عَيْن | ʿayn | œil ; source | عَيْن |
+sadr | صَدْر | ṣadr (pl. ṣudûr) | poitrine | صَدْر |
+
+@ l24
+audhu | أَعُوذُ | aʿûdhu | je cherche refuge | عُذْ |
+falaq | فَلَق | falaq | l'aube | فَلَق |
+ghasiq | غَاسِق | ghâsiq | l'obscurité (de la nuit) | غاسِق |
+waqaba | وَقَبَ | waqaba | s'étendre (la nuit) | وَقَبَ |
+naffatha | نَفَّاثَة | naffâtha (pl. naffâthât) | celle qui souffle | نَفّاثَة |
+uqda | عُقْدَة | ʿuqda (pl. ʿuqad) | nœud | عُقْدَة |
+hasid | حَاسِد | ḥâsid | envieux | حاسِد |
+hasada | حَسَدَ | ḥasada | envier | حَسَدَ |
+malik2 | مَلِك | malik | roi | مَلِك |
+waswas | وَسْوَاس | waswâs | le chuchoteur (tentateur) | وَسْواس |
+khannas | خَنَّاس | khannâs | celui qui se dérobe | خَنّاس |
+jinna | جِنَّة | jinna | les djinns | جِنَّة |
+
+@ l25
+kataba | كَتَبَ | kataba / yaktubu | écrire, prescrire | كَتَبَ | كُتِبَ عَلَيْكُمُ = il vous a été prescrit.
+kalima | كَلِمَة | kalima | parole, mot | كَلِمَة |
+qawl | قَوْل | qawl | parole, propos | قَوْل |
+amal | عَمَل | ʿamal (pl. aʿmâl) | action, œuvre | عَمَل |
+kufr | كُفْر | kufr | mécréance | كُفْر |
+khalq | خَلْق | khalq | création | خَلْق |
+dhanb | ذَنْب | dhanb (pl. dhunûb) | péché | ذَنب |
+maghfira | مَغْفِرَة | maghfira | pardon | مَغْفِرَة |
+allama | عَلَّمَ | ʿallama / yuʿallimu | enseigner | عَلَّمَ |
+hakama | حَكَمَ | ḥakama / yaḥkumu | juger | حَكَمَ |
+
+@ l26
+alim | عَلِيم | ʿalîm | Omniscient | عَلِيم |
+hakim | حَكِيم | ḥakîm | Sage | حَكِيم |
+aziz | عَزِيز | ʿazîz | Tout-Puissant | عَزِيز |
+ghafur | غَفُور | ghafûr | Très Pardonneur | غَفُور |
+samii | سَمِيع | samîʿ | Celui qui entend tout | سَمِيع |
+basir | بَصِير | baṣîr | Celui qui voit tout | بَصِير |
+qadir | قَدِير | qadîr | Omnipotent | قَدِير |
+khabir | خَبِير | khabîr | Parfaitement informé | خَبِير |
+azim | عَظِيم | ʿaẓîm | immense, sublime | عَظِيم |
+kabir | كَبِير | kabîr | grand | كَبِير |
+karim | كَرِيم | karîm | noble, généreux | كَرِيم |
+shadid | شَدِيد | shadîd | intense, sévère | شَدِيد |
+
+@ l27
+zalim | ظَالِم | ẓâlim (pl. ẓâlimûn) | injuste | ظالِم |
+salih | صَالِح | ṣâliḥ (pl. ṣâliḥûn) | vertueux | صالِح |
+sadiq | صَادِق | ṣâdiq | véridique | صادِق |
+kadhib | كَاذِب | kâdhib | menteur | كاذِب |
+khasir | خَاسِر | khâsir (pl. khâsirûn) | perdant | خاسِر |
+muslim | مُسْلِم | muslim | soumis à Dieu, musulman | مُسْلِم |
+muhsin | مُحْسِن | muḥsin | bienfaisant | مُحْسِن |
+mushrik | مُشْرِك | mushrik | associateur | مُشْرِك |
+muttaqi | مُتَّقِي | muttaqî (pl. muttaqûn) | pieux | مُتَّقي |
+mujrim | مُجْرِم | mujrim | criminel | مُجْرِم |
+mubin | مُبِين | mubîn | clair, évident | مُبِين |
+akthar | أَكْثَر | akthar | plus, la plupart | أَكْثَر | أَكْثَرُ النَّاسِ = la plupart des gens.
+alam_c | أَعْلَم | aʿlam | plus savant, mieux informé | أَعْلَم | وَاللَّهُ أَعْلَمُ = et Allah sait mieux.
+
+@ l28
+hayy | حَيّ | ḥayy | le Vivant | حَيّ |
+qayyum | قَيُّوم | qayyûm | Celui qui subsiste par Lui-même | قَيُّوم |
+sina | سِنَة | sina | somnolence | سِنَة |
+nawm | نَوْم | nawm | sommeil | نَوْم |
+shafaa | شَفَعَ | shafaʿa / yashfaʿu | intercéder | يَشْفَعُ |
+idhn | إِذْن | idhn | permission | إِذْن |
+khalf | خَلْف | khalf | derrière | خَلْف |
+ahata | أَحَاطَ | aḥâṭa / yuḥîṭu | embrasser, cerner | أَحاطَ |
+wasia | وَسِعَ | wasiʿa | englober, contenir | وَسِعَ |
+kursi | كُرْسِيّ | kursiyy | le Siège (Kursî) | كُرْسِيّ |
+hifz | حِفْظ | ḥifẓ | garde, préservation | حِفْظ |
+aliyy | عَلِيّ | ʿaliyy | le Très-Haut | عَلِيّ |
+aada | آدَ | âda / yaʾûdu | peser, fatiguer | يَئُودُ |

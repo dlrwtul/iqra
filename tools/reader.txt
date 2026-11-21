@@ -1,0 +1,159 @@
+# Textes de lecture : glose mot à mot et traduction indicative du sens (français)
+# "= id | sourate | versets | nom | sens du nom | nom arabe | présentation"
+# "s:v = traduction" puis "s:v ~ glose1 | glose2 | …" (une glose par mot du corpus)
+
+= fatiha | 1 | 1-7 | Al-Fâtiha | L'Ouverture | الفَاتِحَة | Récitée dans chaque unité de prière : au moins 17 fois par jour.
+1:1 = Au nom d'Allah, le Tout Miséricordieux, le Très Miséricordieux.
+1:1 ~ au nom d' | Allah | le Tout Miséricordieux | le Très Miséricordieux
+1:2 = La louange est à Allah, Seigneur des mondes,
+1:2 ~ la louange | (est) à Allah | Seigneur | des mondes
+1:3 = le Tout Miséricordieux, le Très Miséricordieux,
+1:3 ~ le Tout Miséricordieux | le Très Miséricordieux
+1:4 = Maître du Jour de la Rétribution.
+1:4 ~ Maître | du Jour | de la Rétribution
+1:5 = C'est Toi seul que nous adorons, et c'est Toi seul dont nous implorons l'aide.
+1:5 ~ Toi (seul) | nous adorons | et Toi (seul) | nous implorons l'aide
+1:6 = Guide-nous sur le droit chemin,
+1:6 ~ guide-nous | (sur) le chemin | droit
+1:7 = le chemin de ceux que Tu as comblés de bienfaits, non pas de ceux qui ont encouru la colère, ni des égarés.
+1:7 ~ le chemin | de ceux que | Tu as comblé de bienfaits | eux | non pas | ceux qui ont encouru la colère | contre eux | et ni | les égarés
+
+= kursi | 2 | 255-255 | Âyat al-Kursî | Le verset du Siège | آيَةُ الكُرْسِيّ | Le plus grand verset du Coran, souvent récité après la prière et avant de dormir.
+2:255 = Allah ! Point de divinité à part Lui, le Vivant, Celui qui subsiste par Lui-même. Ni somnolence ni sommeil ne Le saisissent. À Lui appartient tout ce qui est dans les cieux et sur la terre. Qui peut intercéder auprès de Lui sans Sa permission ? Il sait ce qui est devant eux et ce qui est derrière eux, et ils n'embrassent de Sa science que ce qu'Il veut. Son Siège englobe les cieux et la terre, et leur garde ne Lui pèse pas. Il est le Très-Haut, l'Immense.
+2:255 ~ Allah | (il n'y a) pas | de divinité | sauf | Lui | le Vivant | Celui qui subsiste par Lui-même | ne… pas | Le saisit | somnolence | et ni | sommeil | à Lui | ce qui | (est) dans | les cieux | et ce qui | (est) sur | la terre | qui | (est-il) donc | celui qui | intercède | auprès de Lui | sauf | avec Sa permission | Il sait | ce qui | (est) entre | leurs mains (devant eux) | et ce qui | (est) derrière eux | et ne… pas | ils embrassent | quoi que ce soit | de | Sa science | sauf | de ce que | Il a voulu | englobe | Son Siège | les cieux | et la terre | et ne… pas | Lui pèse | leur garde | et Il (est) | le Très-Haut | l'Immense
+
+= qadr | 97 | 1-5 | Al-Qadr | La Nuit du Destin | القَدْر | La nuit où le Coran a commencé à descendre, meilleure que mille mois.
+97:1 = Nous l'avons fait descendre durant la Nuit du Destin.
+97:1 ~ certes Nous | l'avons fait descendre | durant | la nuit | du Destin
+97:2 = Et qui te fera savoir ce qu'est la Nuit du Destin ?
+97:2 ~ et qu'est-ce qui | t'a fait savoir | ce qu'est | la nuit | du Destin
+97:3 = La Nuit du Destin est meilleure que mille mois.
+97:3 ~ la nuit | du Destin | (est) meilleure | que | mille | mois
+97:4 = Durant celle-ci descendent les anges ainsi que l'Esprit, avec la permission de leur Seigneur, pour tout ordre.
+97:4 ~ descendent | les anges | et l'Esprit | en elle | avec la permission | de leur Seigneur | pour | tout | ordre
+97:5 = Elle est paix, jusqu'à l'apparition de l'aube.
+97:5 ~ paix | elle (est) | jusqu'à | l'apparition | de l'aube
+
+= asr | 103 | 1-3 | Al-ʿAṣr | Le Temps | العَصْر | L'imam ash-Shâfiʿî disait : si les gens méditaient seulement cette sourate, elle leur suffirait.
+103:1 = Par le Temps !
+103:1 ~ par le Temps
+103:2 = L'homme est certes en perdition,
+103:2 ~ certes | l'homme | (est) assurément dans | une perte
+103:3 = sauf ceux qui croient et accomplissent les bonnes œuvres, qui s'enjoignent mutuellement la vérité et s'enjoignent mutuellement l'endurance.
+103:3 ~ sauf | ceux qui | ont cru | et ont accompli | les bonnes œuvres | et se sont recommandé | la vérité | et se sont recommandé | l'endurance
+
+= fil | 105 | 1-5 | Al-Fîl | L'Éléphant | الفِيل | L'armée d'Abraha venue détruire la Kaʿba, l'année de la naissance du Prophète ﷺ.
+105:1 = N'as-tu pas vu comment ton Seigneur a agi envers les gens de l'Éléphant ?
+105:1 ~ n'as-tu pas | vu | comment | a agi | ton Seigneur | envers les gens | de l'Éléphant
+105:2 = N'a-t-Il pas rendu leur ruse vaine ?
+105:2 ~ n'a-t-Il pas | rendu | leur ruse | dans | l'égarement (l'échec)
+105:3 = Et Il envoya contre eux des oiseaux par volées,
+105:3 ~ et Il a envoyé | contre eux | des oiseaux | par volées
+105:4 = qui leur lançaient des pierres d'argile durcie,
+105:4 ~ qui leur lançaient | des pierres | d' | argile durcie
+105:5 = et Il les rendit semblables à de la paille mâchée.
+105:5 ~ et Il les rendit | comme de la paille | mâchée
+
+= quraysh | 106 | 1-4 | Quraysh | Les Quraysh | قُرَيْش | La tribu du Prophète ﷺ, gardienne de la Kaʿba, invitée à la gratitude.
+106:1 = Pour le pacte des Quraysh,
+106:1 ~ pour le pacte | des Quraysh
+106:2 = leur pacte pour le voyage d'hiver et d'été,
+106:2 ~ leur pacte | (pour) le voyage | d'hiver | et d'été
+106:3 = qu'ils adorent donc le Seigneur de cette Maison,
+106:3 ~ qu'ils adorent donc | le Seigneur | de cette | Maison
+106:4 = qui les a nourris contre la faim et rassurés contre la peur.
+106:4 ~ qui | les a nourris | contre | la faim | et les a rassurés | contre | la peur
+
+= maun | 107 | 1-7 | Al-Mâʿûn | L'Ustensile | المَاعُون | La foi véritable se voit dans le soin des faibles et la sincérité de la prière.
+107:1 = As-tu vu celui qui dément la Rétribution ?
+107:1 ~ as-tu vu | celui qui | dément | la Rétribution
+107:2 = C'est bien lui qui repousse l'orphelin,
+107:2 ~ c'est donc lui | celui qui | repousse | l'orphelin
+107:3 = et qui n'encourage pas à nourrir le pauvre.
+107:3 ~ et ne… pas | il encourage | à | nourrir | le pauvre
+107:4 = Malheur donc à ceux qui prient,
+107:4 ~ malheur donc | à ceux qui prient
+107:5 = qui sont négligents dans leur prière,
+107:5 ~ ceux qui | eux | de | leur prière | (sont) distraits
+107:6 = qui font ostentation,
+107:6 ~ ceux qui | eux | font ostentation
+107:7 = et refusent l'ustensile (le moindre service).
+107:7 ~ et ils refusent | l'ustensile
+
+= kawthar | 108 | 1-3 | Al-Kawthar | L'Abondance | الكَوْثَر | La plus courte sourate du Coran : trois versets, dix mots.
+108:1 = Nous t'avons certes accordé l'Abondance.
+108:1 ~ certes Nous | t'avons donné | l'Abondance
+108:2 = Prie donc pour ton Seigneur et sacrifie.
+108:2 ~ alors prie | pour ton Seigneur | et sacrifie
+108:3 = C'est celui qui te hait qui sera sans postérité.
+108:3 ~ certes | celui qui te hait | c'est lui | le privé de postérité
+
+= kafirun | 109 | 1-6 | Al-Kâfirûn | Les Mécréants | الكَافِرُون | Une déclaration claire : pas de compromis dans l'adoration.
+109:1 = Dis : « Ô vous les mécréants !
+109:1 ~ dis | ô vous | les mécréants
+109:2 = Je n'adore pas ce que vous adorez,
+109:2 ~ ne… pas | j'adore | ce que | vous adorez
+109:3 = et vous n'êtes pas adorateurs de ce que j'adore.
+109:3 ~ et ni | vous | (êtes) adorateurs | de ce que | j'adore
+109:4 = Je ne suis pas adorateur de ce que vous avez adoré,
+109:4 ~ et ni | moi | (suis) adorateur | de ce que | vous avez adoré
+109:5 = et vous n'êtes pas adorateurs de ce que j'adore.
+109:5 ~ et ni | vous | (êtes) adorateurs | de ce que | j'adore
+109:6 = À vous votre religion, et à moi ma religion. »
+109:6 ~ à vous | votre religion | et à moi | ma religion
+
+= nasr | 110 | 1-3 | An-Naṣr | Le Secours | النَّصْر | Révélée vers la fin de la mission du Prophète ﷺ : la victoire appelle la louange et le repentir.
+110:1 = Lorsque viendra le secours d'Allah ainsi que la victoire,
+110:1 ~ quand | vient | le secours | d'Allah | et la victoire
+110:2 = et que tu verras les gens entrer en foule dans la religion d'Allah,
+110:2 ~ et tu vois | les gens | entrer | dans | la religion | d'Allah | en foules
+110:3 = alors glorifie ton Seigneur par Sa louange et implore Son pardon. Il est certes Celui qui accueille sans cesse le repentir.
+110:3 ~ alors glorifie | par la louange | de ton Seigneur | et demande-Lui pardon | certes Il | est | Celui qui accueille le repentir
+
+= masad | 111 | 1-5 | Al-Masad | Les Fibres | المَسَد | Abû Lahab, oncle du Prophète ﷺ et ennemi acharné du message.
+111:1 = Que périssent les deux mains d'Abû Lahab, et qu'il périsse lui-même !
+111:1 ~ périssent | les deux mains | d'Abû | Lahab | et il a péri
+111:2 = Sa fortune ne lui a servi à rien, ni ce qu'il a acquis.
+111:2 ~ ne… pas | a servi | à lui | sa fortune | et ce que | il a acquis
+111:3 = Il sera brûlé dans un feu plein de flammes,
+111:3 ~ il brûlera | (dans) un feu | doté de | flammes
+111:4 = de même que sa femme, la porteuse de bois,
+111:4 ~ et sa femme | porteuse | du bois
+111:5 = à son cou, une corde de fibres.
+111:5 ~ dans | son cou | une corde | de | fibres
+
+= ikhlas | 112 | 1-4 | Al-Ikhlâṣ | Le Monothéisme pur | الإِخْلَاص | Le Prophète ﷺ a dit qu'elle équivaut au tiers du Coran.
+112:1 = Dis : « Il est Allah, Unique.
+112:1 ~ dis | Lui | Allah | (est) Un
+112:2 = Allah, l'Absolu.
+112:2 ~ Allah | l'Absolu
+112:3 = Il n'a pas engendré et n'a pas été engendré,
+112:3 ~ ne… pas | Il a engendré | et ne… pas | Il a été engendré
+112:4 = et nul n'est égal à Lui. »
+112:4 ~ et ne… pas | est | à Lui | égal | aucun
+
+= falaq | 113 | 1-5 | Al-Falaq | L'Aube naissante | الفَلَق | Avec An-Nâs, les deux sourates de protection récitées matin et soir.
+113:1 = Dis : « Je cherche refuge auprès du Seigneur de l'aube naissante,
+113:1 ~ dis | je cherche refuge | auprès du Seigneur | de l'aube
+113:2 = contre le mal de ce qu'Il a créé,
+113:2 ~ contre | le mal | de ce que | Il a créé
+113:3 = contre le mal de l'obscurité quand elle s'étend,
+113:3 ~ et contre | le mal | de l'obscurité | quand | elle s'étend
+113:4 = contre le mal de celles qui soufflent sur les nœuds,
+113:4 ~ et contre | le mal | de celles qui soufflent | sur | les nœuds
+113:5 = et contre le mal de l'envieux quand il envie. »
+113:5 ~ et contre | le mal | d'un envieux | quand | il envie
+
+= nas | 114 | 1-6 | An-Nâs | Les Hommes | النَّاس | La dernière sourate du Coran : chercher refuge contre le tentateur intérieur.
+114:1 = Dis : « Je cherche refuge auprès du Seigneur des hommes,
+114:1 ~ dis | je cherche refuge | auprès du Seigneur | des hommes
+114:2 = le Roi des hommes,
+114:2 ~ Roi | des hommes
+114:3 = le Dieu des hommes,
+114:3 ~ Dieu | des hommes
+114:4 = contre le mal du tentateur furtif,
+114:4 ~ contre | le mal | du chuchoteur | qui se dérobe
+114:5 = qui souffle le mal dans les poitrines des hommes,
+114:5 ~ celui qui | chuchote | dans | les poitrines | des hommes
+114:6 = qu'il soit djinn ou humain. »
+114:6 ~ parmi | les djinns | et les hommes
