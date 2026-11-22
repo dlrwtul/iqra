@@ -99,6 +99,8 @@ body {
   padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
   overflow-x: hidden;
 }
+/* Bande sous la barre d'état du téléphone, au-dessus de l'en-tête collant */
+body::before { content: ''; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 40; background: var(--bg); }
 a { color: var(--primary); text-decoration: none; }
 a:hover { text-decoration: underline; }
 h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 0.4em; letter-spacing: -0.01em; }
@@ -139,7 +141,7 @@ kbd {
 
 /* ------------------------------------------------------------------ en-tête */
 .topbar {
-  position: sticky; top: 0; z-index: 30;
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
   background: color-mix(in srgb, var(--bg) 86%, transparent);
   backdrop-filter: saturate(1.4) blur(12px);
   -webkit-backdrop-filter: saturate(1.4) blur(12px);
@@ -383,7 +385,7 @@ body.focus-mode #view { max-width: 760px; padding-top: 0; }
 
 /* ------------------------------------------------------------------ leçon */
 .focus-bar {
-  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px;
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; align-items: center; gap: 10px;
   padding: 10px 0; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 .focus-title { flex: 1; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -592,7 +594,7 @@ body.focus-mode #view { max-width: 760px; padding-top: 0; }
   .reader-head .reader-ar { align-self: flex-end; font-size: calc(1.9rem * var(--ar-scale)); }
 }
 .reader-known { display: flex; align-items: center; gap: 10px; }
-.reader-tools { position: sticky; top: 60px; z-index: 10; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; margin-bottom: 8px; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.reader-tools { position: sticky; top: calc(60px + env(safe-area-inset-top, 0px)); z-index: 10; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; margin-bottom: 8px; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .basmala { text-align: center; font-size: calc(1.9rem * var(--ar-scale)); color: var(--primary); margin: 6px 0 14px; }
 .passage { margin-bottom: 12px; }
 .verse { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; transition: box-shadow 0.2s, border-color 0.2s; }
@@ -650,3 +652,9 @@ body.focus-mode #toasts, .no-tabbar #toasts { bottom: 18px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ------------------------------------------------------------------ version partagée (claude.ai)
+   Les récitations viennent d'autres sites, bloqués dans une page partagée : on masque leurs commandes. */
+.embedded .rec, .embedded #playall, .embedded [data-wbw], .embedded .verse-ex [data-verse], .embedded .form [data-verse] { display: none !important; }
+.embedded .verse-tools [data-verse] { pointer-events: none; color: var(--muted); }
+.embedded .verse-tools [data-verse] .ic { display: none; }

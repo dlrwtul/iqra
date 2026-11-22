@@ -49,7 +49,7 @@
     steps.push({
       key: 'review', icon: 'review', title: 'Révisions',
       sub: due ? U.plural(due, 'carte à réviser', 'cartes à réviser') + ' · ≈ ' + Math.max(1, Math.round(due * 0.15)) + ' min' : counts.total ? 'Rien à réviser aujourd’hui' : 'Débloquées après votre première leçon',
-      done: due === 0 && counts.total > 0, href: due ? '#/revision' : counts.total ? '#/entrainement' : null, cta: due ? 'Réviser' : 'S’entraîner'
+      done: due === 0 && counts.total > 0, href: due ? '#revision' : counts.total ? '#entrainement' : null, cta: due ? 'Réviser' : 'S’entraîner'
     });
     if (next) {
       const lr = st.lessons[next.id];
@@ -58,16 +58,16 @@
       steps.push({
         key: 'lesson', icon: 'layers', title: doneToday ? 'Leçon du jour terminée' : label,
         sub: (doneToday ? 'En bonus : ' + label + ' · ' : '') + '≈ ' + D.lessonMinutes(next) + ' min · ' + U.plural((D.lessonWords[next.id] || []).length, 'mot', 'mots') + (lr ? ' · meilleur score ' + lr.best + ' %' : ''),
-        done: doneToday, href: V.lessonState(next) === 'locked' ? null : '#/lecon/' + next.id, cta: doneToday ? 'Continuer' : lr ? 'Reprendre' : 'Commencer'
+        done: doneToday, href: V.lessonState(next) === 'locked' ? null : '#lecon-' + next.id, cta: doneToday ? 'Continuer' : lr ? 'Reprendre' : 'Commencer'
       });
     } else {
-      steps.push({ key: 'lesson', icon: 'layers', title: 'Parcours terminé, félicitations !', sub: 'Continuez les révisions pour garder vos mots à vie.', done: true, href: '#/parcours', cta: 'Revoir' });
+      steps.push({ key: 'lesson', icon: 'layers', title: 'Parcours terminé, félicitations !', sub: 'Continuez les révisions pour garder vos mots à vie.', done: true, href: '#parcours', cta: 'Revoir' });
     }
     const passage = V.suggestPassage();
     steps.push({
       key: 'read', icon: 'book', title: passage ? 'Lecture : ' + passage.name : 'Défi chrono',
       sub: passage ? 'Relire avec le mot à mot · ≈ 3 min' : '60 secondes pour réactiver vos mots',
-      done: passage ? st.read[passage.id] === U.today() : false, href: passage ? '#/lecture/' + passage.id : '#/chrono', cta: passage ? 'Lire' : 'Jouer'
+      done: passage ? st.read[passage.id] === U.today() : false, href: passage ? '#lecture-' + passage.id : '#chrono', cta: passage ? 'Lire' : 'Jouer'
     });
 
     const week = Stats.week();
@@ -83,7 +83,7 @@
       (fresh
         ? '<div class="card hero"><div><h2>Comprenez ' + U.pct(IQRA.stats.covered / IQRA.stats.tokens, 0) + ' des mots du Coran</h2><p>Les ' + U.num(IQRA.stats.words) + ' mots de ce parcours représentent <b>' + U.pct(IQRA.stats.covered / IQRA.stats.tokens, 0) + '</b> des ' + U.num(IQRA.stats.tokens) +
           ' mots du texte coranique. Chaque leçon dure 15 à 20 minutes : explication courte, mots fréquents, exercices, puis lecture d’un vrai verset.</p>' +
-          '<div class="row gap wrap"><a class="btn btn-primary btn-lg" href="#/lecon/l01">' + icon('play') + ' Commencer la leçon 1</a><a class="btn btn-ghost" href="#/methode">Découvrir la méthode</a></div></div></div>'
+          '<div class="row gap wrap"><a class="btn btn-primary btn-lg" href="#lecon-l01">' + icon('play') + ' Commencer la leçon 1</a><a class="btn btn-ghost" href="#methode">Découvrir la méthode</a></div></div></div>'
         : '') +
 
       '<div class="grid-2">' +
@@ -125,7 +125,7 @@
       '<div class="bar-goal" style="bottom:' + (22 + Math.round(((goal * 60) / maxSec) * 96)) + 'px" title="Objectif : ' + goal + ' min"></div>' +
       '</div><p class="muted small">Temps d’étude total : ' + U.plural(U.minutes(Stats.totalSec()), 'minute', 'minutes') + '</p></div>' +
       '<div class="card tip"><h3>' + icon('bulb') + ' Conseil</h3><p>' + U.esc(TIPS[U.today() % TIPS.length]) + '</p>' +
-      '<div class="row gap wrap mt"><a class="btn btn-ghost btn-sm" href="#/chrono">' + icon('clock') + ' Défi 60 s</a><a class="btn btn-ghost btn-sm" href="#/mots">' + icon('list') + ' Mes mots</a></div></div>' +
+      '<div class="row gap wrap mt"><a class="btn btn-ghost btn-sm" href="#chrono">' + icon('clock') + ' Défi 60 s</a><a class="btn btn-ghost btn-sm" href="#mots">' + icon('list') + ' Mes mots</a></div></div>' +
       '</div></section>';
 
     U.$('#start-session', root).addEventListener('click', () => IQRA.app.startSession());
@@ -158,7 +158,7 @@
         const isNext = next && next.id === l.id;
         const ws = D.lessonWords[l.id] || [];
         html +=
-          '<li><a class="lesson ' + s + (isNext ? ' next' : '') + (l.reading ? ' reading' : '') + '" href="' + (s === 'locked' ? '#/parcours' : '#/lecon/' + l.id) + '"' + (s === 'locked' ? ' aria-disabled="true" data-locked="1"' : '') + '>' +
+          '<li><a class="lesson ' + s + (isNext ? ' next' : '') + (l.reading ? ' reading' : '') + '" href="' + (s === 'locked' ? '#parcours' : '#lecon-' + l.id) + '"' + (s === 'locked' ? ' aria-disabled="true" data-locked="1"' : '') + '>' +
           '<span class="lesson-badge">' + (s === 'done' ? icon('check') : s === 'locked' ? icon('lock') : l.reading ? icon('book') : l.index + 1) + '</span>' +
           '<span class="lesson-txt"><b>' + U.esc(l.title) + '</b><span class="muted small">' + U.esc(l.goal) + '</span>' +
           '<span class="lesson-meta">' + icon('clock') + ' ' + D.lessonMinutes(l) + ' min · ' + U.plural(ws.length, 'mot', 'mots') + (rec ? ' · ' + rec.best + ' %' : '') + '</span></span>' +
@@ -246,11 +246,11 @@
   V.more = function (root) {
     const counts = SRS.counts();
     const tiles = [
-      ['#/mots', 'list', 'Mes mots', 'Le lexique complet, avec fréquences et exemples'],
-      ['#/chrono', 'clock', 'Défi chrono', '60 secondes pour répondre au maximum de questions'],
-      ['#/entrainement', 'target', 'Entraînement libre', 'Exercices variés sur vos mots, sans pression'],
-      ['#/methode', 'bulb', 'La méthode', 'Pourquoi et comment ce parcours fonctionne'],
-      ['#/reglages', 'settings', 'Réglages', 'Objectif, affichage, audio, sauvegarde']
+      ['#mots', 'list', 'Mes mots', 'Le lexique complet, avec fréquences et exemples'],
+      ['#chrono', 'clock', 'Défi chrono', '60 secondes pour répondre au maximum de questions'],
+      ['#entrainement', 'target', 'Entraînement libre', 'Exercices variés sur vos mots, sans pression'],
+      ['#methode', 'bulb', 'La méthode', 'Pourquoi et comment ce parcours fonctionne'],
+      ['#reglages', 'settings', 'Réglages', 'Objectif, affichage, audio, sauvegarde']
     ];
     root.innerHTML =
       '<section><header class="page-head"><h1>Plus</h1></header>' +
@@ -310,14 +310,18 @@
       '<label class="field"><span>Thème</span><select data-k="theme">' + opt('auto', st.theme, 'Automatique') + opt('light', st.theme, 'Clair') + opt('dark', st.theme, 'Sombre') + '</select></label>' +
       '</div>' +
       '<div class="card form"><h3>Audio</h3>' +
-      '<label class="field"><span>Récitateur des versets</span><select data-k="reciter">' +
+      '<label class="field rec"><span>Récitateur des versets</span><select data-k="reciter">' +
       opt('Alafasy_128kbps', st.reciter, 'Mishary Rashid Alafasy') + opt('Husary_128kbps', st.reciter, 'Mahmoud Khalil Al-Husary') + opt('Minshawy_Murattal_128kbps', st.reciter, 'Mohamed Siddiq Al-Minshawi') +
       '</select></label>' +
       '<label class="field"><span>Vitesse de la voix (mots)</span><select data-k="rate" data-num="1">' + opt(0.6, st.rate, 'Lente') + opt(0.75, st.rate, 'Normale') + opt(0.9, st.rate, 'Rapide') + '</select></label>' +
       '<p class="muted small">' + (Audio.ttsReady ? 'Voix arabe détectée : ' + U.esc(Audio.voice.name) + '.' : 'Aucune voix arabe de synthèse sur cet appareil : la récitation coranique du mot est utilisée à la place.') + '</p>' +
       '<div class="row gap wrap"><button class="btn btn-ghost btn-sm" data-say="بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ" data-loc="1:1:1">' + icon('sound') + ' Tester la voix</button>' +
       '<button class="btn btn-ghost btn-sm" data-verse="1:1">' + icon('play') + ' Tester la récitation</button></div></div>' +
-      '<div class="card form"><h3>Sauvegarde</h3><p class="muted small">Votre progression est enregistrée dans ce navigateur. Exportez-la pour la conserver ou la transférer sur un autre appareil.</p>' +
+      '<div class="card form"><h3>Sauvegarde</h3><p class="muted small">' +
+      (IQRA.Cloud.status === 'synced'
+        ? 'Votre progression est enregistrée dans votre compte claude.ai : vous la retrouvez sur tous vos appareils. Vous pouvez aussi l’exporter dans un fichier.'
+        : 'Votre progression est enregistrée dans ce navigateur. Exportez-la pour la conserver ou la transférer sur un autre appareil.') +
+      '</p>' +
       '<div class="row gap wrap"><button class="btn btn-ghost" id="exp">' + icon('download') + ' Exporter</button>' +
       '<label class="btn btn-ghost">' + icon('upload') + ' Importer<input type="file" accept="application/json,.json" id="imp" hidden></label>' +
       '<button class="btn btn-danger-ghost" id="rst">' + icon('trash') + ' Tout réinitialiser</button></div></div>' +
@@ -329,14 +333,35 @@
       if (!k) return;
       st[k] = el.type === 'checkbox' ? el.checked : el.dataset.num ? Number(el.value) : el.value;
       Store.saveNow();
+      Store.sync();
       IQRA.app.applySettings();
       ui.toast('Réglage enregistré.', 'ok', 1500);
     });
-    U.$('#exp', root).addEventListener('click', () => {
+    U.$('#exp', root).addEventListener('click', async () => {
+      const filename = 'iqra-progression-' + U.dayKey(U.today()) + '.json';
+      if (IQRA.embedded) {
+        // Page partagée : le téléchargement passe par la confirmation de claude.ai, sinon par le presse-papiers.
+        const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+        if (dl) {
+          try {
+            await dl.save({ filename, data: Store.exportJSON() });
+          } catch (err) {
+            if (!err || err.code !== 'declined') ui.toast('L’export n’est pas disponible ici.', 'warn');
+          }
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(Store.exportJSON());
+          ui.toast('Sauvegarde copiée dans le presse-papiers.', 'ok');
+        } catch (err) {
+          ui.toast('L’export n’est pas disponible ici.', 'warn');
+        }
+        return;
+      }
       const blob = new Blob([Store.exportJSON()], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'iqra-progression-' + U.dayKey(U.today()) + '.json';
+      a.download = filename;
       document.body.appendChild(a);
       a.click();
       setTimeout(() => {
@@ -352,7 +377,7 @@
           Store.importJSON(txt);
           IQRA.app.applySettings();
           ui.toast('Progression importée.', 'ok');
-          IQRA.app.go('#/');
+          IQRA.app.go('#accueil');
         } catch (err) {
           ui.toast('Fichier invalide : ' + err.message, 'warn');
         }
@@ -363,7 +388,7 @@
         Store.reset();
         IQRA.app.applySettings();
         ui.toast('Progression réinitialisée.', 'ok');
-        IQRA.app.go('#/');
+        IQRA.app.go('#accueil');
       }
     });
   };
