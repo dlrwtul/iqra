@@ -28,6 +28,29 @@
     } catch (e) {}
   };
 
+  /* ---------------------------------------------------------------- sens proches
+     Mots dont les traductions se recouvrent : ils ne sont jamais proposés ensemble
+     (sinon deux réponses seraient correctes). */
+  const SYN = [
+    ['rabb', 'malik'], ['yawm', 'nahar'], ['abada', 'abd', 'abid'], ['sirat', 'sabil'], ['mustaqim', 'haqq', 'inna'],
+    ['alladhi', 'man'], ['la', 'ma', 'lam', 'lan', 'laysa', 'ghayr'], ['inna', 'qad'], ['in', 'law', 'illa'], ['bal', 'lakin'],
+    ['aw', 'am'], ['idha', 'idh', 'lamma'], ['an', 'anna'], ['ila', 'hatta'], ['ma', 'madha'], ['amila', 'jaala', 'faala'],
+    ['jaa', 'ata'], ['aata', 'aata2'], ['shaa', 'arada'], ['akhadha', 'ittakhadha'], ['nasr', 'fath'], ['nas', 'ahl', 'ashab', 'insan', 'rajul'],
+    ['ittaqa', 'khafa'], ['kalima', 'qawl'], ['alima', 'ilm'], ['dhakara', 'dhikr'], ['amana', 'iman', 'mumin'], ['tawwab', 'taba'],
+    ['ghafara', 'maghfira'], ['saliha', 'amal'], ['kadhdhaba', 'kadhib'], ['zalama', 'zalim'], ['khabir', 'alam_c'], ['salla', 'salat', 'daa'],
+    ['hada', 'huda'], ['sabara', 'sabr'], ['khalaqa', 'khalq'], ['amara', 'amr'], ['hasada', 'hasid'], ['kafara', 'kufr', 'kafir']
+  ];
+  const synOf = {};
+  SYN.forEach((g, gi) => g.forEach((id) => (synOf[id] = (synOf[id] || []).concat(gi))));
+  const normFr = (s) => String(s).toLowerCase().replace(/\([^)]*\)/g, '').replace(/[^a-zà-ÿœ' ]/g, ' ').replace(/\s+/g, ' ').trim();
+  Ex.conflict = function (a, b) {
+    if (a.id === b.id) return true;
+    if (normFr(a.fr) === normFr(b.fr) || a.ar === b.ar) return true;
+    const ga = synOf[a.id];
+    const gb = synOf[b.id];
+    return !!(ga && gb && ga.some((g) => gb.includes(g)));
+  };
+
   /* ---------------------------------------------------------------- distracteurs */
   function distractors(w, n, field) {
     const li = D.lessonById[w.l] ? D.lessonById[w.l].index : 0;
@@ -40,7 +63,7 @@
       .map((x) => [score(x), x])
       .sort((a, b) => b[0] - a[0])
       .forEach(([, x]) => {
-        if (out.length < n && !seen.has(x[field])) {
+        if (out.length < n && !seen.has(x[field]) && !Ex.conflict(w, x) && !out.some((o) => Ex.conflict(o, x))) {
           seen.add(x[field]);
           out.push(x);
         }
@@ -85,7 +108,8 @@
     for (const loc of w.ex) {
       const [s, v] = loc.split(':');
       const toks = D.verse(s + ':' + v);
-      if (toks && toks.length <= 26 && toks.some((t) => t.id === w.id)) {
+      const clash = toks && toks.some((t) => t.id && t.id !== w.id && D.byId[t.id] && Ex.conflict(w, D.byId[t.id]));
+      if (toks && !clash && toks.length <= 26 && toks.some((t) => t.id === w.id)) {
         return { type: 'verse', wordId: w.id, tag: 'Dans le Coran', sv: s + ':' + v, toks, target: w.id, fr: w.fr };
       }
     }
@@ -93,15 +117,9 @@
   };
 
   Ex.pairs = function (words) {
-    const seenFr = new Set();
-    const seenAr = new Set();
     const list = [];
     U.shuffle(words).forEach((w) => {
-      if (list.length < 5 && !seenFr.has(w.fr) && !seenAr.has(w.ar)) {
-        seenFr.add(w.fr);
-        seenAr.add(w.ar);
-        list.push(w);
-      }
+      if (list.length < 5 && !list.some((x) => Ex.conflict(x, w))) list.push(w);
     });
     return list.length >= 3 ? { type: 'pairs', tag: 'Associer', words: list } : null;
   };

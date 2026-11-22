@@ -191,16 +191,17 @@
         ease = Math.max(1.3, ease - 0.2);
         ivl = 0;
       } else {
+        // Intervalles toujours strictement croissants : Difficile < Bien < Facile
         const old = ivl;
+        const good = Math.max(reps === 0 ? 2 : reps === 1 ? 4 : Math.round(old * ease), old + 1);
+        const hard = Math.max(1, Math.min(reps < 2 ? 1 : Math.round(old * 1.2), good - 1));
+        const easy = Math.max(reps === 0 ? 4 : reps === 1 ? 7 : Math.round(old * ease * 1.3), good + 1);
         if (r === 2) {
-          ivl = Math.max(1, Math.round(old * 1.2));
+          ivl = hard;
           ease = Math.max(1.3, ease - 0.15);
-        } else if (r === 3) {
-          ivl = reps === 0 ? 1 : reps === 1 ? 3 : Math.round(old * ease);
-          ivl = Math.max(ivl, old + 1);
-        } else {
-          ivl = reps === 0 ? 3 : reps === 1 ? 6 : Math.round(old * ease * 1.3);
-          ivl = Math.max(ivl, old + 2);
+        } else if (r === 3) ivl = good;
+        else {
+          ivl = easy;
           ease += 0.15;
         }
         reps += 1;
@@ -281,8 +282,16 @@
     },
     stop() {
       try {
-        this.player.pause();
+        const p = this.player;
+        p.onerror = null;
+        p.onended = null;
+        p.pause();
       } catch (e) {}
+      if (this._resolve) {
+        const r = this._resolve;
+        this._resolve = null;
+        r(false);
+      }
       if ('speechSynthesis' in window) speechSynthesis.cancel();
     },
     /** Prononce un mot (synthèse vocale) ; sinon joue la récitation d'une occurrence coranique. */
@@ -305,14 +314,19 @@
       const self = this;
       return new Promise((resolve) => {
         const p = this.player;
+        const done = (ok) => {
+          if (self._resolve === done) self._resolve = null;
+          resolve(ok);
+        };
+        self._resolve = done;
         p.src = url;
-        p.onended = () => resolve(true);
+        p.onended = () => done(true);
         p.onerror = () => {
           self.warn('net', 'Audio indisponible : une connexion internet est nécessaire pour les récitations.');
-          resolve(false);
+          done(false);
         };
         const pr = p.play();
-        if (pr && pr.catch) pr.catch(() => resolve(false));
+        if (pr && pr.catch) pr.catch(() => done(false));
       });
     },
     /** Récitation mot à mot (quran.com) — loc = "s:v:w" */

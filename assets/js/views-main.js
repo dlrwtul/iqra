@@ -48,7 +48,7 @@
     const steps = [];
     steps.push({
       key: 'review', icon: 'review', title: 'Révisions',
-      sub: due ? U.plural(due, 'carte à réviser', 'cartes à réviser') + ' · ≈ ' + Math.max(1, Math.round(due * 0.12)) + ' min' : counts.total ? 'Rien à réviser aujourd’hui' : 'Débloquées après votre première leçon',
+      sub: due ? U.plural(due, 'carte à réviser', 'cartes à réviser') + ' · ≈ ' + Math.max(1, Math.round(due * 0.15)) + ' min' : counts.total ? 'Rien à réviser aujourd’hui' : 'Débloquées après votre première leçon',
       done: due === 0 && counts.total > 0, href: due ? '#/revision' : counts.total ? '#/entrainement' : null, cta: due ? 'Réviser' : 'S’entraîner'
     });
     if (next) {
@@ -67,7 +67,7 @@
     steps.push({
       key: 'read', icon: 'book', title: passage ? 'Lecture : ' + passage.name : 'Défi chrono',
       sub: passage ? 'Relire avec le mot à mot · ≈ 3 min' : '60 secondes pour réactiver vos mots',
-      done: !!(st.read[passage ? passage.id : ''] === U.today()), href: passage ? '#/lecture/' + passage.id : '#/chrono', cta: 'Lire'
+      done: passage ? st.read[passage.id] === U.today() : false, href: passage ? '#/lecture/' + passage.id : '#/chrono', cta: passage ? 'Lire' : 'Jouer'
     });
 
     const week = Stats.week();
@@ -142,7 +142,7 @@
   /* ---------------------------------------------------------------- parcours */
   V.path = function (root) {
     const next = V.nextLesson();
-    let html = '<section class="path"><header class="page-head"><h1>Parcours</h1><p class="muted">' + IQRA.lessons.length + ' leçons en 7 étapes, du plus fréquent au plus rare. ' +
+    let html = '<section class="path"><header class="page-head"><h1>Parcours</h1><p class="muted">' + IQRA.lessons.length + ' leçons en 7 étapes, des mots les plus fréquents aux plus spécifiques. ' +
       (Store.state.settings.free ? 'Mode libre activé : toutes les leçons sont ouvertes.' : 'Obtenez au moins 70 % pour débloquer la leçon suivante.') + '</p></header>';
     IQRA.units.forEach((u) => {
       const ls = IQRA.lessons.filter((l) => l.unit === u.id);
@@ -182,7 +182,7 @@
   V.words = function (root) {
     const counts = SRS.counts();
     root.innerHTML =
-      '<section class="words"><header class="page-head"><h1>Mes mots</h1><p class="muted">' + U.num(IQRA.vocab.length) + ' éléments, classés par leçon ou par fréquence dans le Coran.</p></header>' +
+      '<section class="words"><header class="page-head"><h1>Mes mots</h1><p class="muted">' + U.num(IQRA.vocab.length) + ' éléments : ' + IQRA.vocab.filter((w) => w.k === 'w').length + ' mots, ' + IQRA.vocab.filter((w) => w.k === 'a').length + ' préfixes et ' + IQRA.vocab.filter((w) => w.k === 's').length + ' pronoms suffixes. Classés par leçon ou par fréquence dans le Coran.</p></header>' +
       '<div class="stat-row">' +
       '<div class="stat"><b>' + counts.total + '</b><span>appris</span></div>' +
       '<div class="stat"><b>' + counts.learning + '</b><span>en apprentissage</span></div>' +
@@ -269,7 +269,7 @@
     const s = IQRA.stats;
     const pillars = [
       ['bolt', 'La fréquence d’abord', 'Le Coran compte ' + U.num(s.tokens) + ' mots, mais quelques centaines de mots reviennent sans cesse. Les ' + U.num(s.words) + ' mots de ce parcours couvrent ' + U.pct(s.covered / s.tokens, 0) + ' du texte : chaque mot appris est choisi pour son utilité réelle (loi de Pareto).'],
-      ['review', 'La répétition espacée', 'Chaque mot revient juste avant que vous ne l’oubliiez : le lendemain, puis à 3 jours, une semaine, un mois… (algorithme de type SM-2, celui d’Anki). C’est la méthode la plus efficace connue pour la mémoire à long terme.'],
+      ['review', 'La répétition espacée', 'Chaque mot revient juste avant que vous ne l’oubliiez : le lendemain, puis 4 jours plus tard, puis 10 jours, un mois… (algorithme de type SM-2, celui d’Anki). C’est la méthode la plus efficace connue pour la mémoire à long terme.'],
       ['target', 'Le rappel actif', 'On n’apprend pas en relisant, mais en cherchant la réponse. Chaque mot est testé dans les deux sens (arabe → français, français → arabe), en contexte, et les erreurs reviennent jusqu’à être corrigées.'],
       ['layers', 'Les racines et les schèmes', 'L’arabe construit ses mots sur des racines de trois lettres et des « moules ». Comprendre ce système permet de deviner des centaines de mots nouveaux à partir de ceux que vous connaissez.'],
       ['book', 'Le vrai texte, dès le premier jour', 'Pas de phrases artificielles : vous commencez par Al-Fâtiha et chaque leçon de lecture porte sur une sourate que vous récitez. Les versets d’exemple sont choisis pour contenir un maximum de mots déjà connus (input compréhensible).'],

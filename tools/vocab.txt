@@ -21,7 +21,7 @@ alam | عالَم | ʿâlam (pl. ʿâlamîn) | monde ; les mondes | عالَم |
 malik | مالِك | mâlik | Maître, possesseur | مالِك |
 yawm | يَوْم | yawm | jour | يَوْم |
 din | دِين | dîn | religion ; rétribution | دِين | يَوْمِ الدِّينِ = le Jour de la Rétribution (du Jugement).
-iyya | إِيّا | iyyâ- | (support de pronom) | إِيّا | إِيَّاكَ = « toi (seul) », placé en tête pour l'exclusivité.
+iyya | إِيَّاكَ | iyyâka | toi (seul), en complément | إِيّا | iyyâ- porte le pronom : إِيَّاكَ (toi), إِيَّاهُ (lui), إِيَّانَا (nous). Placé en tête, il marque l'exclusivité.
 abada | عَبَدَ | ʿabada / yaʿbudu | adorer | عَبَدَ | نَعْبُدُ = nous adorons.
 abd | عَبْد | ʿabd (pl. ʿibâd) | serviteur, adorateur | عَبْد |
 istaana | اسْتَعانَ | istaʿâna / yastaʿînu | demander l'aide | اسْتَعِينُ | نَسْتَعِينُ = nous demandons l'aide.
@@ -144,7 +144,7 @@ anzala | أَنْزَلَ | anzala / yunzilu | faire descendre, révéler | أَ
 arsala | أَرْسَلَ | arsala / yursilu | envoyer | أَرْسَلَ |
 kadhdhaba | كَذَّبَ | kadhdhaba | démentir, traiter de menteur | كَذَّبَ |
 daa | دَعَا | daʿâ / yadʿû | invoquer, appeler | دَعا |
-arada | أَرَادَ | arâda / yurîdu | vouloir | أَرادَ |
+arada | أَرَادَ | arâda / yurîdu | vouloir, désirer | أَرادَ |
 zalama | ظَلَمَ | ẓalama / yaẓlimu | être injuste, léser | ظَلَمَ |
 akhadha | أَخَذَ | akhadha / yaʾkhudhu | prendre, saisir | أَخَذَ |
 ittakhadha | اتَّخَذَ | ittakhadha | prendre pour, adopter | اتَّخَذَ |
@@ -261,7 +261,7 @@ dun | دُون | dûn | en dehors de, au lieu de | دُون |
 fawq | فَوْق | fawq | au-dessus de | فَوْق |
 taht | تَحْت | taḥt | sous, au-dessous | تَحْت | تَجْرِي مِنْ تَحْتِهَا الْأَنْهَارُ = sous lesquels coulent les rivières.
 amr | أَمْر | amr | ordre ; affaire | أَمْر |
-sabil | سَبِيل | sabîl | chemin, voie | سَبِيل | فِي سَبِيلِ اللَّهِ = dans le chemin d'Allah.
+sabil | سَبِيل | sabîl | sentier, voie | سَبِيل | فِي سَبِيلِ اللَّهِ = dans le sentier (la voie) d'Allah.
 qalb | قَلْب | qalb (pl. qulûb) | cœur | قَلْب |
 yad | يَد | yad (pl. aydî) | main | يَد |
 wajh | وَجْه | wajh | visage | وَجْه |

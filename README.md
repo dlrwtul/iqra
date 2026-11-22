@@ -12,7 +12,7 @@ variés, répétition espacée, lecture mot à mot des sourates récitées dans 
 | Principe | Mise en œuvre |
 |---|---|
 | **La fréquence d’abord** (Pareto) | Les mots sont choisis et ordonnés selon leur fréquence réelle dans le Coran. Chaque fiche affiche le nombre d’occurrences et le rang du mot. |
-| **Répétition espacée** | Algorithme de type SM-2 (comme Anki) : chaque mot revient juste avant l’oubli (1 j, 3 j, 1 semaine, 1 mois…). |
+| **Répétition espacée** | Algorithme de type SM-2 (comme Anki) : chaque mot revient juste avant l’oubli (le lendemain, puis 4 j, 10 j, 1 mois…). |
 | **Rappel actif** | Arabe → français, français → arabe, écoute, association, repérage du mot dans un vrai verset, remise en ordre. Une question ratée revient plus tard dans la séance. |
 | **Racines et schèmes** | Une unité entière pour deviner le sens des mots à partir de la racine (فاعل، مفعول، فعيل، أفعل…). |
 | **Input compréhensible** | Les versets d’exemple sont choisis automatiquement parmi les plus courts **et** ceux qui contiennent le plus de mots déjà appris à ce stade. |
@@ -50,6 +50,8 @@ L’accueil propose une séance guidée en trois étapes : **révisions** (≈ 5
 - Progression enregistrée dans le navigateur, avec export et import en fichier JSON.
 
 ## Lancer le site
+
+**En ligne (GitHub Pages)** : https://dlrwtul.github.io/iqra/ — publié depuis la branche `gh-pages`.
 
 Le site est **100 % statique** : HTML, CSS et JavaScript, sans framework ni étape de compilation.
 

@@ -85,7 +85,7 @@ IQRA.lessons = [
       { h: "Les préfixes wa, fa, ka", p: "وَ wa = et ; فَـ fa = alors, donc (conséquence ou suite immédiate) ; كَـ ka = comme. Ils se collent au mot suivant : فَصَلِّ = alors prie ; كَعَصْفٍ = comme de la paille." },
       { h: "Préposition + pronom", p: "Les pronoms se collent aussi aux prépositions : فِيهِ (en lui), مِنْهُ (de lui), عَلَيْهِمْ (sur eux), إِلَيْهِ (vers lui). Attention : عَلَى devient عَلَيْـ et إِلَى devient إِلَيْـ devant un pronom." }
     ],
-    ex: [["إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ", "nous sommes à Allah et c'est vers Lui que nous retournons"], ["فِي سَبِيلِ اللَّهِ", "dans le chemin d'Allah"], ["إِنَّ اللَّهَ مَعَ الصَّابِرِينَ", "Allah est avec les endurants"], ["مِنْ عِنْدِ اللَّهِ", "de chez Allah"]],
+    ex: [["إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ", "nous sommes à Allah et c'est vers Lui que nous retournons"], ["فِي سَبِيلِ اللَّهِ", "dans le sentier d'Allah"], ["إِنَّ اللَّهَ مَعَ الصَّابِرِينَ", "Allah est avec les endurants"], ["مِنْ عِنْدِ اللَّهِ", "de chez Allah"]],
     quiz: [
       { t: "mcq", q: "إِلَيْهِ signifie :", o: ["vers lui", "sur lui", "en lui", "de lui"] },
       { t: "mcq", q: "Après une préposition, le nom se termine généralement par la voyelle :", o: ["i (kasra)", "u (ḍamma)", "a (fatḥa)", "aucune voyelle"] },
@@ -237,7 +237,7 @@ IQRA.lessons = [
       { t: "mcq", q: "قَالُوا signifie :", o: ["ils ont dit", "il a dit", "dis !", "vous avez dit"] },
       { t: "mcq", q: "جَعَلْتُمْ : qui a fait l'action ?", o: ["vous", "nous", "ils", "elle"] },
       { t: "mcq", q: "خَلَقْتَ : qui a créé ?", o: ["tu", "je", "elle", "nous"], why: "-ta = tu ; -tu = je." },
-      { t: "mcq", q: "عَلِمَتْ نَفْسٌ : « une âme … »", o: ["a su", "saura", "sait", "sache !"], why: "-at = elle : le sujet نَفْس est féminin." },
+      { t: "mcq", q: "قَالَتْ signifie :", o: ["elle a dit", "il a dit", "ils ont dit", "dis !"], why: "-at = elle (3e personne du féminin)." },
       { t: "order", ar: ["خَلَقَ", "اللَّهُ", "السَّمَاوَاتِ", "وَالْأَرْضَ"], fr: "Allah a créé les cieux et la terre" }
     ]
   },
@@ -425,7 +425,7 @@ IQRA.lessons = [
       { h: "Le corps, siège du sens", p: "Le Coran fait du قَلْب (cœur) l'organe de la compréhension : لَهُمْ قُلُوبٌ لَا يَفْقَهُونَ بِهَا = ils ont des cœurs avec lesquels ils ne comprennent pas. صَدْر (poitrine) : رَبِّ اشْرَحْ لِي صَدْرِي = Mon Seigneur, ouvre-moi ma poitrine." },
       { h: "Le duel : -âni / -ayni", p: "Pour dire « deux », on ajoute ـَانِ -âni ou ـَيْنِ -ayni : يَدَانِ / يَدَيْنِ (deux mains). En annexion, le n tombe : تَبَّتْ يَدَا أَبِي لَهَبٍ = que périssent les deux mains d'Abû Lahab." }
     ],
-    ex: [["مِنْ دُونِ اللَّهِ", "en dehors d'Allah"], ["رَبِّ اشْرَحْ لِي صَدْرِي", "Mon Seigneur, ouvre-moi ma poitrine"], ["فِي سَبِيلِ اللَّهِ", "dans le chemin d'Allah"], ["كُلُّ شَيْءٍ هَالِكٌ إِلَّا وَجْهَهُ", "toute chose périt sauf Son Visage"]],
+    ex: [["مِنْ دُونِ اللَّهِ", "en dehors d'Allah"], ["رَبِّ اشْرَحْ لِي صَدْرِي", "Mon Seigneur, ouvre-moi ma poitrine"], ["فِي سَبِيلِ اللَّهِ", "dans le sentier d'Allah"], ["كُلُّ شَيْءٍ هَالِكٌ إِلَّا وَجْهَهُ", "toute chose périt sauf Son Visage"]],
     quiz: [
       { t: "mcq", q: "مِنْ قَبْلِكَ signifie :", o: ["avant toi", "après toi", "au-dessus de toi", "sans toi"] },
       { t: "mcq", q: "مِنْ دُونِ اللَّهِ signifie :", o: ["en dehors d'Allah", "auprès d'Allah", "par Allah", "au-dessus d'Allah"] },

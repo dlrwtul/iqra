@@ -144,6 +144,7 @@
     leaveFns = [];
     ui.closeSheet();
     Audio.stop();
+    U.$$('#toasts .toast-warn').forEach((t) => t.parentNode.removeChild(t));
     const path = decodeURIComponent(location.hash.replace(/^#\/?/, '')).replace(/\/$/, '');
     let match = null;
     for (const r of ROUTES) {
@@ -172,11 +173,43 @@
     document.title = (h1 && match && match.tab !== 'home' ? h1.textContent.trim() + ' · ' : '') + 'Iqra — l’arabe du Coran';
   }
 
+  /* ---------------------------------------------------------------- typographie française
+     Espace fine insécable avant : ; ! ? » et après «, apostrophe typographique. */
+  const NNBSP = '\u202F';
+  const TYPO_TEST = /\s[:;!?»]|«\s|[A-Za-zÀ-ÿ]'[A-Za-zÀ-ÿ]|(?:^|[\s(])-[a-zâîû]/;
+  function typoText(t) {
+    const v = t.nodeValue;
+    if (!v || !TYPO_TEST.test(v)) return;
+    const nv = v
+      .replace(/[ \u00A0]([:;!?»])/g, NNBSP + '$1')
+      .replace(/«[ \u00A0]/g, '«' + NNBSP)
+      .replace(/([A-Za-zÀ-ÿ])'([A-Za-zÀ-ÿ])/g, '$1’$2')
+      .replace(/(^|[\s(])-(?=[a-zâîû])/g, '$1‑');
+    if (nv !== v) t.nodeValue = nv;
+  }
+  function typo(root) {
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const list = [];
+    while (w.nextNode()) list.push(w.currentNode);
+    list.forEach(typoText);
+  }
+  function watchTypo() {
+    new MutationObserver((muts) => {
+      muts.forEach((m) =>
+        m.addedNodes.forEach((n) => {
+          if (n.nodeType === 3) typoText(n);
+          else if (n.nodeType === 1 && n.tagName !== 'SCRIPT') typo(n);
+        })
+      );
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+
   /* ---------------------------------------------------------------- démarrage */
   function start() {
     Store.load();
     D.init();
     Audio.init();
+    watchTypo();
     shell();
     app.applySettings();
     Timer.init();

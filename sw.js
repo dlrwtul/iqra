@@ -1,5 +1,5 @@
 /* Iqra — service worker : fonctionnement hors ligne (hors audio). */
-const CACHE = 'iqra-v1';
+const CACHE = 'iqra-v2';
 const SHELL = [
   './',
   'index.html',

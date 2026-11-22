@@ -17,7 +17,7 @@
     const l = D.lessonById[id];
     if (!l) return V.notFound(root);
     if (V.lessonState(l) === 'locked') {
-      root.innerHTML = '<section class="center-msg card"><div class="big-ic">' + icon('lock') + '</div><h2>Leçon verrouillée</h2><p class="muted">Terminez la leçon précédente avec au moins 70 %, ou activez le mode libre dans les réglages.</p><a class="btn btn-primary" href="#/parcours">Voir le parcours</a></section>';
+      root.innerHTML = focusBar('<span class="muted">Leçon ' + (l.index + 1) + '</span> ' + U.esc(l.title), '#/parcours') + '<section class="center-msg card"><div class="big-ic">' + icon('lock') + '</div><h2>Leçon verrouillée</h2><p class="muted">Terminez la leçon précédente avec au moins 70 %, ou activez le mode libre dans les réglages.</p><a class="btn btn-primary" href="#/parcours">Voir le parcours</a></section>';
       return;
     }
     const words = D.lessonWords[l.id] || [];
@@ -67,7 +67,7 @@
     function nav(prevOk, nextLabel) {
       return (
         '<div class="nav-row">' +
-        (prevOk ? '<button class="btn btn-ghost" data-nav="-1">' + icon('left') + ' Précédent</button>' : '<span></span>') +
+        (prevOk ? '<button class="btn btn-ghost" data-nav="-1" aria-label="Précédent">' + icon('left') + ' <span class="lbl">Précédent</span></button>' : '<span></span>') +
         '<button class="btn btn-primary" data-nav="1">' + (nextLabel || 'Suivant') + ' ' + icon('right') + '</button></div>'
       );
     }
@@ -101,7 +101,7 @@
         const t = l.theory[s.i];
         body.innerHTML =
           '<div class="card theory"><p class="eyebrow">Comprendre · ' + (s.i + 1) + '/' + l.theory.length + '</p><h2>' + U.esc(t.h) + '</h2><p class="lead">' + U.rich(t.p) + '</p>' +
-          (t.tbl ? '<div class="tbl">' + t.tbl.map((r) => '<div class="tbl-row"><span class="tbl-ar ar" lang="ar" dir="rtl">' + U.esc(r[0]) + '</span>' + ui.sayBtn(r[0].split('←').pop().split('/')[0]) + '<span class="tbl-fr">' + U.rich(r[1]) + '</span></div>').join('') + '</div>' : '') +
+          (t.tbl ? '<div class="tbl">' + t.tbl.map((r) => '<div class="tbl-row"><span class="tbl-ar ar" lang="ar" dir="rtl">' + U.esc(r[0]) + '</span>' + ui.sayBtn(r[0].replace(/\s*[←/]\s*/g, '، ')) + '<span class="tbl-fr">' + U.rich(r[1]) + '</span></div>').join('') + '</div>' : '') +
           '</div>' + nav(true);
         setKey(arrowKeys);
       } else if (s.k === 'examples') {
@@ -174,7 +174,7 @@
         '<div class="card summary">' +
         '<div class="summary-top">' + ui.ring(res.score, 132, '<b>' + pct + ' %</b><small>' + res.first + '/' + res.total + '</small>') +
         '<div><h1>' + (pct >= 90 ? 'Excellent !' : passed ? 'Leçon réussie' : 'Encore un effort') + '</h1>' + ui.stars(V.starsFor(pct)) +
-        '<p class="muted">' + (passed ? 'Les mots de cette leçon rejoignent vos révisions : le premier rappel aura lieu demain.' : 'Il faut 70 % pour débloquer la suite. Les mots sont déjà dans vos révisions ; refaites la leçon pour consolider.') + '</p></div></div>' +
+        '<p class="muted">' + (passed ? 'Les mots de cette leçon rejoignent vos révisions : premier rappel demain (dès aujourd’hui pour les mots ratés).' : 'Il faut 70 % pour débloquer la suite. Les mots sont déjà dans vos révisions ; refaites la leçon pour consolider.') + '</p></div></div>' +
         '<div class="stat-row">' +
         '<div class="stat"><b>' + U.mmss((Date.now() - start) / 1000) + '</b><span>durée</span></div>' +
         '<div class="stat"><b>+' + (res.xp + (passed ? 20 : 5)) + '</b><span>XP</span></div>' +
@@ -479,7 +479,7 @@
     const vs = p.verses.filter((v) => (!from || v.v >= from) && (!to || v.v <= to));
     return (
       '<div class="passage' + (opts.interlinear ? ' interlinear' : '') + (opts.translation === false ? ' no-tr' : '') + '" data-p="' + p.id + '">' +
-      (p.s !== 9 && p.s !== 1 && (!from || from === 1) && opts.basmala ? '<div class="basmala quran" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>' : '') +
+      (opts.basmala && p.s !== 1 && p.s !== 9 && vs.length && vs[0].v === 1 ? '<div class="basmala quran" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>' : '') +
       vs
         .map(
           (v) =>
@@ -543,11 +543,11 @@
     const prefs = (Store.state.readerPrefs = Store.state.readerPrefs || { inter: true, tr: true });
     root.innerHTML =
       '<section class="reader"><a class="back" href="#/lecture">' + icon('left') + ' Toutes les sourates</a>' +
-      '<header class="reader-head card"><div><p class="eyebrow">' + (p.s === 2 ? 'Sourate Al-Baqara, verset 255' : 'Sourate ' + p.s) + '</p><h1>' + U.esc(p.name) + ' <span class="muted">· ' + U.esc(p.meaning) + '</span></h1>' +
-      '<p class="muted">' + U.esc(p.intro) + '</p></div><div class="reader-ar ar" lang="ar">' + U.esc(p.ar) + '</div>' +
+      '<header class="reader-head card"><div class="rh-top"><div><p class="eyebrow">' + (p.s === 2 ? 'Sourate Al-Baqara, verset 255' : 'Sourate ' + p.s) + '</p><h1>' + U.esc(p.name) + ' <span class="muted">· ' + U.esc(p.meaning) + '</span></h1></div>' +
+      '<div class="reader-ar ar" lang="ar">' + U.esc(p.ar) + '</div></div><p class="muted">' + U.esc(p.intro) + '</p>' +
       '<div class="reader-known">' + ui.ring(r, 64, '<b>' + Math.round(r * 100) + '%</b>') + '<span class="small muted">des mots<br>connus</span></div></header>' +
       '<div class="reader-tools"><div class="seg"><button data-t="inter" class="' + (prefs.inter ? 'on' : '') + '">Mot à mot</button><button data-t="tr" class="' + (prefs.tr ? 'on' : '') + '">Traduction</button></div>' +
-      '<button class="btn btn-primary btn-sm" id="playall">' + icon('play') + ' Écouter tout</button></div>' +
+      '<button class="btn btn-primary btn-sm" id="playall">' + icon('play') + ' Écouter</button></div>' +
       V.passageHTML(p, 0, 0, { interlinear: prefs.inter, translation: prefs.tr, basmala: true }) +
       '<div class="row center mt"><button class="btn btn-primary" id="mark">' + icon('check') + ' J’ai lu et compris</button></div>' +
       '<p class="muted small center">Traduction indicative du sens, rédigée pour l’apprentissage.</p></section>';
@@ -583,7 +583,7 @@
       }
       playing = false;
       U.$$('.verse.playing', root).forEach((x) => x.classList.remove('playing'));
-      playBtn.innerHTML = icon('play') + ' Écouter tout';
+      playBtn.innerHTML = icon('play') + ' Écouter';
     });
     IQRA.app.onLeave(() => {
       playing = false;
