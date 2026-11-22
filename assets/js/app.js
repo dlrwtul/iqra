@@ -6,14 +6,14 @@
   const icon = ui.icon;
 
   const ROUTES = [
-    [/^$/, 'home', V.home, ''],
+    [/^(?:accueil)?$/, 'home', V.home, ''],
     [/^parcours$/, 'path', V.path, ''],
-    [/^lecon\/(\w+)$/, 'path', V.lesson, 'focus'],
+    [/^lecon[-/](\w+)$/, 'path', V.lesson, 'focus'],
     [/^revision$/, 'review', V.review, 'focus'],
     [/^entrainement$/, 'more', V.practice, 'focus'],
     [/^chrono$/, 'more', V.chrono, 'focus'],
     [/^lecture$/, 'read', V.readerList, ''],
-    [/^lecture\/(\w+)$/, 'read', V.reader, 'study'],
+    [/^lecture[-/](\w+)$/, 'read', V.reader, 'study'],
     [/^mots$/, 'more', V.words, ''],
     [/^methode$/, 'more', V.method, ''],
     [/^reglages$/, 'more', V.settings, ''],
@@ -21,11 +21,11 @@
   ];
 
   const TABS = [
-    ['#/', 'home', 'home', 'Accueil'],
-    ['#/parcours', 'path', 'path', 'Parcours'],
-    ['#/revision', 'review', 'review', 'Réviser'],
-    ['#/lecture', 'read', 'book', 'Lecture'],
-    ['#/plus', 'more', 'grid', 'Plus']
+    ['#accueil', 'home', 'home', 'Accueil'],
+    ['#parcours', 'path', 'path', 'Parcours'],
+    ['#revision', 'review', 'review', 'Réviser'],
+    ['#lecture', 'read', 'book', 'Lecture'],
+    ['#plus', 'more', 'grid', 'Plus']
   ];
 
   let leaveFns = [];
@@ -44,8 +44,16 @@
     applySettings() {
       const st = Store.state.settings;
       const html = document.documentElement;
-      if (st.theme === 'auto') html.removeAttribute('data-theme');
-      else html.setAttribute('data-theme', st.theme);
+      // Ne retirer data-theme que si c'est Iqra qui l'a posé (l'hôte d'une page partagée peut le fixer lui-même).
+      if (st.theme === 'auto') {
+        if (html.dataset.iqraTheme) {
+          html.removeAttribute('data-theme');
+          delete html.dataset.iqraTheme;
+        }
+      } else {
+        html.setAttribute('data-theme', st.theme);
+        html.dataset.iqraTheme = '1';
+      }
       html.setAttribute('data-arsize', st.arSize || 'm');
       updateChips();
     },
@@ -53,11 +61,11 @@
     /* ---------------- session guidée : révisions → leçon → lecture */
     startSession() {
       const steps = [];
-      if (SRS.dueCount() > 0) steps.push({ k: 'review', href: '#/revision', label: 'Révisions' });
+      if (SRS.dueCount() > 0) steps.push({ k: 'review', href: '#revision', label: 'Révisions' });
       const next = V.nextLesson();
-      if (next && V.lessonState(next) !== 'locked') steps.push({ k: 'lesson', href: '#/lecon/' + next.id, label: 'Leçon ' + (next.index + 1) });
+      if (next && V.lessonState(next) !== 'locked') steps.push({ k: 'lesson', href: '#lecon-' + next.id, label: 'Leçon ' + (next.index + 1) });
       const p = V.suggestPassage();
-      steps.push(p ? { k: 'read', href: '#/lecture/' + p.id, label: 'Lecture : ' + p.name } : { k: 'read', href: '#/chrono', label: 'Défi chrono' });
+      steps.push(p ? { k: 'read', href: '#lecture-' + p.id, label: 'Lecture : ' + p.name } : { k: 'read', href: '#chrono', label: 'Défi chrono' });
       app.session = { steps, i: 0 };
       ui.toast('Session lancée : ' + steps.map((s) => s.label).join(' → '), 'info', 4000);
       app.go(steps[0].href);
@@ -92,9 +100,9 @@
       'afterbegin',
       '<a class="skip" href="#view">Aller au contenu</a>' +
         '<header class="topbar"><div class="topbar-in">' +
-        '<a class="brand" href="#/" aria-label="Iqra, accueil"><span class="brand-mark" lang="ar">اقرأ</span><span class="brand-name">Iqra</span></a>' +
+        '<a class="brand" href="#accueil" aria-label="Iqra, accueil"><span class="brand-mark" lang="ar">اقرأ</span><span class="brand-name">Iqra</span></a>' +
         '<nav class="topnav" aria-label="Navigation principale">' + TABS.map((t) => '<a href="' + t[0] + '" data-tab="' + t[1] + '">' + t[3] + '</a>').join('') + '</nav>' +
-        '<div class="top-chips"><a class="chip chip-time" href="#/" title="Temps d’étude aujourd’hui"><span class="mini-ring"></span><span class="ct"></span></a>' +
+        '<div class="top-chips"><a class="chip chip-time" href="#accueil" title="Temps d’étude aujourd’hui"><span class="mini-ring"></span><span class="ct"></span></a>' +
         '<span class="chip chip-flame" title="Série de jours"><span class="cf-ic">' + icon('flame') + '</span><span class="cs"></span></span></div>' +
         '</div></header>' +
         '<main id="view" tabindex="-1"></main>' +
@@ -165,12 +173,12 @@
       else V.notFound(view);
     } catch (e) {
       console.error(e);
-      view.innerHTML = '<section class="center-msg card"><h2>Oups, une erreur est survenue</h2><p class="muted">' + U.esc(e.message) + '</p><a class="btn btn-primary" href="#/">Accueil</a></section>';
+      view.innerHTML = '<section class="center-msg card"><h2>Oups, une erreur est survenue</h2><p class="muted">' + U.esc(e.message) + '</p><a class="btn btn-primary" href="#accueil">Accueil</a></section>';
     }
     window.scrollTo(0, 0);
     updateChips();
     const h1 = view.querySelector('h1');
-    document.title = (h1 && match && match.tab !== 'home' ? h1.textContent.trim() + ' · ' : '') + 'Iqra — l’arabe du Coran';
+    document.title = (h1 && match && match.tab !== 'home' ? h1.textContent.trim() + ' · ' : '') + (IQRA.embedded ? 'Iqra' : 'Iqra — l’arabe du Coran');
   }
 
   /* ---------------------------------------------------------------- typographie française
@@ -209,17 +217,25 @@
     Store.load();
     D.init();
     Audio.init();
+    if (IQRA.embedded) document.documentElement.classList.add('embedded');
     watchTypo();
     shell();
+    U.$('.skip').addEventListener('click', (e) => {
+      e.preventDefault();
+      U.$('#view').focus();
+    });
     app.applySettings();
     Timer.init();
     window.addEventListener('hashchange', route);
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) Store.saveNow();
-      else updateChips();
+      if (document.hidden) {
+        Store.saveNow();
+        IQRA.Cloud.push();
+      } else updateChips();
     });
     route();
-    if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !/localhost|127\.0\.0\.1/.test(location.hostname)) {
+    IQRA.Cloud.init();
+    if (!IQRA.embedded && 'serviceWorker' in navigator && /^https?:/.test(location.protocol) && !/localhost|127\.0\.0\.1/.test(location.hostname)) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
     }
   }

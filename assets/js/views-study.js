@@ -17,7 +17,7 @@
     const l = D.lessonById[id];
     if (!l) return V.notFound(root);
     if (V.lessonState(l) === 'locked') {
-      root.innerHTML = focusBar('<span class="muted">Leçon ' + (l.index + 1) + '</span> ' + U.esc(l.title), '#/parcours') + '<section class="center-msg card"><div class="big-ic">' + icon('lock') + '</div><h2>Leçon verrouillée</h2><p class="muted">Terminez la leçon précédente avec au moins 70 %, ou activez le mode libre dans les réglages.</p><a class="btn btn-primary" href="#/parcours">Voir le parcours</a></section>';
+      root.innerHTML = focusBar('<span class="muted">Leçon ' + (l.index + 1) + '</span> ' + U.esc(l.title), '#parcours') + '<section class="center-msg card"><div class="big-ic">' + icon('lock') + '</div><h2>Leçon verrouillée</h2><p class="muted">Terminez la leçon précédente avec au moins 70 %, ou activez le mode libre dans les réglages.</p><a class="btn btn-primary" href="#parcours">Voir le parcours</a></section>';
       return;
     }
     const words = D.lessonWords[l.id] || [];
@@ -36,7 +36,7 @@
     let keyH = null;
 
     root.innerHTML =
-      focusBar('<span class="muted">Leçon ' + (l.index + 1) + '</span> ' + U.esc(l.title), '#/parcours', '<span class="timer-pill">' + icon('clock') + ' <span class="lt">0:00</span> / ' + est + ' min</span>') +
+      focusBar('<span class="muted">Leçon ' + (l.index + 1) + '</span> ' + U.esc(l.title), '#parcours', '<span class="timer-pill">' + icon('clock') + ' <span class="lt">0:00</span> / ' + est + ' min</span>') +
       '<div class="lesson-steps"><div class="dots"></div></div><div class="lesson-body"></div>';
     const body = U.$('.lesson-body', root);
     const dots = U.$('.dots', root);
@@ -188,9 +188,9 @@
           : '') +
         '<div class="row gap wrap center mt">' +
         IQRA.app.sessionNextButton('lesson') +
-        (passed && next ? '<a class="btn btn-primary" href="#/lecon/' + next.id + '">Leçon suivante ' + icon('right') + '</a>' : '') +
-        '<a class="btn btn-ghost" href="#/lecon/' + l.id + '" data-reload="1">Recommencer</a>' +
-        '<a class="btn btn-ghost" href="#/parcours">Parcours</a></div></div>';
+        (passed && next ? '<a class="btn btn-primary" href="#lecon-' + next.id + '">Leçon suivante ' + icon('right') + '</a>' : '') +
+        '<a class="btn btn-ghost" href="#lecon-' + l.id + '" data-reload="1">Recommencer</a>' +
+        '<a class="btn btn-ghost" href="#parcours">Parcours</a></div></div>';
       body.addEventListener('click', (e) => {
         const c = e.target.closest('[data-word]');
         if (c) ui.showWord(c.dataset.word);
@@ -224,7 +224,7 @@
       Audio.stop();
     });
 
-    root.innerHTML = focusBar('Révisions', '#/', '<span class="timer-pill"><span class="rv-left"></span></span>') + '<div class="progress thin"><div class="progress-bar"></div></div><div class="review-body"></div>';
+    root.innerHTML = focusBar('Révisions', '#accueil', '<span class="timer-pill"><span class="rv-left"></span></span>') + '<div class="progress thin"><div class="progress-bar"></div></div><div class="review-body"></div>';
     const body = U.$('.review-body', root);
     const left = U.$('.rv-left', root);
     const bar = U.$('.progress-bar', root);
@@ -304,7 +304,7 @@
         '<div class="stat"><b>' + Math.round(acc * 100) + ' %</b><span>réussite</span></div>' +
         '<div class="stat"><b>' + stats.again + '</b><span>« Encore »</span></div>' +
         '<div class="stat"><b>+' + stats.n * 2 + '</b><span>XP</span></div></div>' +
-        '<div class="row gap wrap center mt">' + IQRA.app.sessionNextButton('review') + '<a class="btn btn-ghost" href="#/">Accueil</a><a class="btn btn-ghost" href="#/chrono">Défi chrono</a></div></div>';
+        '<div class="row gap wrap center mt">' + IQRA.app.sessionNextButton('review') + '<a class="btn btn-ghost" href="#accueil">Accueil</a><a class="btn btn-ghost" href="#chrono">Défi chrono</a></div></div>';
     }
 
     show();
@@ -317,7 +317,7 @@
       '<section class="center-msg card"><div class="big-ic ok">' + icon('check') + '</div><h2>' + (known ? 'Rien à réviser pour l’instant' : 'Pas encore de mots à réviser') + '</h2>' +
       '<p class="muted">' + (known ? 'Vos ' + known + ' mots sont programmés au moment optimal. ' + (tomorrow ? 'Demain : ' + U.plural(tomorrow, 'carte', 'cartes') + '.' : '') : 'Terminez une leçon : ses mots arriveront ici, programmés selon la répétition espacée.') + '</p>' +
       '<div class="row gap wrap center">' + IQRA.app.sessionNextButton('review') +
-      (known >= 4 ? '<a class="btn btn-primary" href="#/entrainement">' + icon('target') + ' Entraînement libre</a><a class="btn btn-ghost" href="#/chrono">' + icon('clock') + ' Défi chrono</a>' : '<a class="btn btn-primary" href="#/parcours">Aller au parcours</a>') +
+      (known >= 4 ? '<a class="btn btn-primary" href="#entrainement">' + icon('target') + ' Entraînement libre</a><a class="btn btn-ghost" href="#chrono">' + icon('clock') + ' Défi chrono</a>' : '<a class="btn btn-primary" href="#parcours">Aller au parcours</a>') +
       '</div></section>';
   };
 
@@ -325,10 +325,10 @@
   V.practice = function (root) {
     const ids = SRS.knownIds();
     if (ids.length < 4) {
-      root.innerHTML = '<section class="center-msg card"><h2>Apprenez d’abord quelques mots</h2><p class="muted">L’entraînement libre utilise les mots de vos leçons terminées.</p><a class="btn btn-primary" href="#/parcours">Aller au parcours</a></section>';
+      root.innerHTML = '<section class="center-msg card"><h2>Apprenez d’abord quelques mots</h2><p class="muted">L’entraînement libre utilise les mots de vos leçons terminées.</p><a class="btn btn-primary" href="#parcours">Aller au parcours</a></section>';
       return;
     }
-    root.innerHTML = focusBar('Entraînement libre', '#/plus') + '<div class="ex-host"></div>';
+    root.innerHTML = focusBar('Entraînement libre', '#plus') + '<div class="ex-host"></div>';
     // priorité aux mots fragiles (intervalle court, oublis)
     const weighted = ids.slice().sort((a, b) => SRS.card(a).ivl - SRS.card(b).ivl + (SRS.card(b).lapses - SRS.card(a).lapses) + (Math.random() - 0.5) * 6);
     const items = Ex.practice(weighted.slice(0, Math.max(12, Math.round(weighted.length * 0.6))), 12);
@@ -339,7 +339,7 @@
         U.$('.ex-host', root).innerHTML =
           '<div class="card summary"><div class="summary-top">' + ui.ring(res.score, 120, '<b>' + Math.round(res.score * 100) + ' %</b><small>' + res.first + '/' + res.total + '</small>') +
           '<div><h1>Entraînement terminé</h1><p class="muted">L’entraînement libre ne modifie pas votre planning de révision.</p></div></div>' +
-          '<div class="row gap wrap center mt"><a class="btn btn-primary" href="#/entrainement" data-reload="1">Recommencer</a><a class="btn btn-ghost" href="#/">Accueil</a></div></div>';
+          '<div class="row gap wrap center mt"><a class="btn btn-primary" href="#entrainement" data-reload="1">Recommencer</a><a class="btn btn-ghost" href="#accueil">Accueil</a></div></div>';
         U.$('[data-reload]', root).addEventListener('click', (e) => {
           e.preventDefault();
           IQRA.app.reload();
@@ -358,7 +358,7 @@
     }
     const best = Store.state.chrono.best;
     root.innerHTML =
-      focusBar('Défi chrono', '#/', '') +
+      focusBar('Défi chrono', '#accueil', '') +
       '<section class="center-msg card chrono-intro"><div class="big-ic">' + icon('clock') + '</div><h1>60 secondes</h1>' +
       '<p class="lead">Traduisez le plus de mots possible. +1 par bonne réponse ; une erreur coûte 3 secondes.</p>' + note +
       '<p class="muted">Record : <b>' + best + '</b></p><button class="btn btn-primary btn-lg" id="go">' + icon('play') + ' Lancer le chrono</button></section>';
@@ -436,7 +436,7 @@
         stage.innerHTML =
           '<div class="center-msg card"><div class="big-ic">' + icon('trophy') + '</div><h1>' + score + ' ' + (score > 1 ? 'bonnes réponses' : 'bonne réponse') + '</h1>' +
           '<p class="lead">' + (record && score > 0 ? 'Nouveau record !' : 'Record : ' + st.best) + '</p><p class="muted">' + U.plural(errors, 'erreur', 'erreurs') + ' · +' + score + ' XP</p>' +
-          '<div class="row gap wrap center"><button class="btn btn-primary" id="again">' + icon('review') + ' Rejouer</button>' + IQRA.app.sessionNextButton('read') + '<a class="btn btn-ghost" href="#/">Accueil</a></div></div>';
+          '<div class="row gap wrap center"><button class="btn btn-primary" id="again">' + icon('review') + ' Rejouer</button>' + IQRA.app.sessionNextButton('read') + '<a class="btn btn-ghost" href="#accueil">Accueil</a></div></div>';
         U.$('#again', stage).addEventListener('click', () => IQRA.app.reload());
       }
       nextQ();
@@ -465,7 +465,7 @@
           const r = V.knownRatio(p);
           const read = Store.state.read[p.id];
           return (
-            '<a class="passage-card card" href="#/lecture/' + p.id + '"><div class="pc-top"><span class="pc-num">' + (p.s === 2 ? '2:255' : p.s) + '</span><span class="pc-ar ar" lang="ar">' + U.esc(p.ar) + '</span></div>' +
+            '<a class="passage-card card" href="#lecture-' + p.id + '"><div class="pc-top"><span class="pc-num">' + (p.s === 2 ? '2:255' : p.s) + '</span><span class="pc-ar ar" lang="ar">' + U.esc(p.ar) + '</span></div>' +
             '<b>' + U.esc(p.name) + '</b><span class="muted small">' + U.esc(p.meaning) + ' · ' + U.plural(p.verses.length, 'verset', 'versets') + '</span>' +
             '<div class="meter sm"><div class="meter-fill" style="width:' + r * 100 + '%"></div></div><span class="small">' + Math.round(r * 100) + ' % des mots connus' + (read ? ' · ' + icon('check') + ' lue' : '') + '</span></a>'
           );
@@ -527,6 +527,7 @@
         if (l) {
           SRS.add(l.dataset.learn, true);
           Store.saveNow();
+          Store.sync();
           ui.toast('Ajouté : ce mot apparaîtra dans vos révisions.', 'ok');
           U.$$('.rw', root).forEach(() => 0);
           ui.closeSheet();
@@ -542,7 +543,7 @@
     const r = V.knownRatio(p);
     const prefs = (Store.state.readerPrefs = Store.state.readerPrefs || { inter: true, tr: true });
     root.innerHTML =
-      '<section class="reader"><a class="back" href="#/lecture">' + icon('left') + ' Toutes les sourates</a>' +
+      '<section class="reader"><a class="back" href="#lecture">' + icon('left') + ' Toutes les sourates</a>' +
       '<header class="reader-head card"><div class="rh-top"><div><p class="eyebrow">' + (p.s === 2 ? 'Sourate Al-Baqara, verset 255' : 'Sourate ' + p.s) + '</p><h1>' + U.esc(p.name) + ' <span class="muted">· ' + U.esc(p.meaning) + '</span></h1></div>' +
       '<div class="reader-ar ar" lang="ar">' + U.esc(p.ar) + '</div></div><p class="muted">' + U.esc(p.intro) + '</p>' +
       '<div class="reader-known">' + ui.ring(r, 64, '<b>' + Math.round(r * 100) + '%</b>') + '<span class="small muted">des mots<br>connus</span></div></header>' +
@@ -601,6 +602,6 @@
   };
 
   V.notFound = function (root) {
-    root.innerHTML = '<section class="center-msg card"><h2>Page introuvable</h2><a class="btn btn-primary" href="#/">Accueil</a></section>';
+    root.innerHTML = '<section class="center-msg card"><h2>Page introuvable</h2><a class="btn btn-primary" href="#accueil">Accueil</a></section>';
   };
 })();

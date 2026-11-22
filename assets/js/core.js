@@ -71,8 +71,15 @@
     created: Date.now()
   });
   let memoryFallback = null;
+  /** Empreinte de l'état sans l'horodatage : sert à ne dater que les vrais changements. */
+  const fingerprint = (st) => JSON.stringify(Object.assign({}, st, { updated: 0 }));
+  const merge = (data) => {
+    const d = defaults();
+    return Object.assign(d, data, { settings: Object.assign(d.settings, (data && data.settings) || {}) });
+  };
   const Store = (IQRA.Store = {
     state: defaults(),
+    _print: '',
     load() {
       let raw = null;
       try {
@@ -82,16 +89,15 @@
       }
       if (raw) {
         try {
-          const data = JSON.parse(raw);
-          const d = defaults();
-          this.state = Object.assign(d, data, { settings: Object.assign(d.settings, data.settings || {}) });
+          this.state = merge(JSON.parse(raw));
         } catch (e) {
           console.warn('Données illisibles, réinitialisation.', e);
         }
       }
+      this._print = fingerprint(this.state);
       return this.state;
     },
-    saveNow() {
+    write() {
       const raw = JSON.stringify(this.state);
       try {
         localStorage.setItem(KEY, raw);
@@ -99,7 +105,24 @@
         memoryFallback = raw;
       }
     },
+    saveNow() {
+      const print = fingerprint(this.state);
+      if (print !== this._print) {
+        // Toujours plus récent que la dernière version connue, même si l'horloge d'un autre appareil avance.
+        this.state.updated = Math.max(Date.now(), (this.state.updated || 0) + 1);
+        this._print = print;
+      }
+      this.write();
+    },
+    /** Remplace l'état local par celui du compte (sans le redater). */
+    adopt(data, updated) {
+      this.state = merge(data);
+      this.state.updated = Math.max(this.state.updated || 0, updated || 0);
+      this._print = fingerprint(this.state);
+      this.write();
+    },
     save: null,
+    sync: () => {},
     day(idx) {
       const k = U.dayKey(idx == null ? U.today() : idx);
       if (!this.state.days[k]) this.state.days[k] = { sec: 0, xp: 0, rev: 0, les: 0 };
@@ -109,22 +132,104 @@
       this.state.xp += n;
       this.day().xp += n;
       this.save();
+      this.sync();
     },
     exportJSON: () => JSON.stringify(Store.state, null, 1),
     importJSON(text) {
       const data = JSON.parse(text);
       if (!data || typeof data !== 'object' || !data.settings) throw new Error('Fichier invalide');
-      const d = defaults();
-      this.state = Object.assign(d, data, { settings: Object.assign(d.settings, data.settings) });
+      this.state = merge(data);
       this.saveNow();
+      Cloud.push();
     },
     reset() {
       this.state = defaults();
       this.saveNow();
+      Cloud.push();
     }
   });
   Store.save = U.debounce(() => Store.saveNow(), 400);
-  window.addEventListener('pagehide', () => Store.saveNow());
+  window.addEventListener('pagehide', () => {
+    Store.saveNow();
+    Cloud.push();
+  });
+
+  /* ------------------------------------------------------------------ page partagée sur claude.ai
+     Dans une page claude.ai (cadre), la progression d'une personne connectée est aussi gardée
+     dans son espace privé du compte (data/users/<id>/progress) : elle la retrouve sur tous ses
+     appareils. Sans compte ou hors claude.ai, elle reste dans ce navigateur. */
+  IQRA.embedded = (function () {
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true;
+    }
+  })();
+  const Cloud = (IQRA.Cloud = {
+    ref: null,
+    status: 'local',
+    pushing: false,
+    again: false,
+    lastPushed: 0,
+    async init() {
+      if (!(window.claude && typeof window.claude.use === 'function')) return;
+      try {
+        const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+        if (!db || !user) return;
+        const id = await user.id();
+        if (!id) return;
+        const ref = db.doc('data/users/' + id + '/progress');
+        const snap = await Promise.race([ref.get(), new Promise((resolve, reject) => setTimeout(() => reject(new Error('délai dépassé')), 10000))]);
+        const remote = snap && snap.exists ? snap.data() : null;
+        this.ref = ref;
+        this.status = 'synced';
+        const local = Store.state;
+        if (remote && remote.state && (remote.updated || 0) > (local.updated || 0)) {
+          this.lastPushed = remote.updated || 0;
+          Store.adopt(remote.state, remote.updated);
+          IQRA.app.applySettings();
+          IQRA.app.reload();
+          IQRA.ui.toast('Progression récupérée depuis votre compte.', 'ok');
+        } else {
+          this.lastPushed = remote ? remote.updated || 0 : 0;
+          await this.push();
+        }
+      } catch (e) {
+        this.ref = null;
+        this.status = 'local';
+      }
+    },
+    async push() {
+      if (!this.ref) return;
+      if (this.pushing) {
+        this.again = true;
+        return;
+      }
+      Store.saveNow();
+      const st = Store.state;
+      if (!st.updated || st.updated <= this.lastPushed) return;
+      this.pushing = true;
+      const updated = st.updated;
+      try {
+        await this.ref.set({ updated, state: JSON.parse(JSON.stringify(st)) });
+        this.lastPushed = updated;
+        this.status = 'synced';
+      } catch (e) {
+        const code = e && e.code;
+        if (code === 'unavailable' || code === 'resource_exhausted') this.again = true;
+        else {
+          this.ref = null;
+          this.status = 'local';
+        }
+      }
+      this.pushing = false;
+      if (this.again) {
+        this.again = false;
+        setTimeout(() => this.push(), 5000);
+      }
+    }
+  });
+  Store.sync = U.debounce(() => Cloud.push(), 4000);
 
   /* ------------------------------------------------------------------ index des données */
   const D = (IQRA.D = { byId: {}, lessonById: {}, lessonWords: {}, verseIndex: {}, readerById: {} });
@@ -305,7 +410,7 @@
         speechSynthesis.speak(u);
         return Promise.resolve();
       }
-      if (fallbackLoc) return this.word(fallbackLoc);
+      if (fallbackLoc && !IQRA.embedded) return this.word(fallbackLoc);
       this.warn('tts', "Aucune voix arabe n'est installée sur cet appareil : la récitation du mot n'est disponible que pour les mots tirés d'un verset.");
       return Promise.resolve();
     },
@@ -322,7 +427,7 @@
         p.src = url;
         p.onended = () => done(true);
         p.onerror = () => {
-          self.warn('net', 'Audio indisponible : une connexion internet est nécessaire pour les récitations.');
+          self.warn('net', IQRA.embedded ? 'Les récitations ne sont pas disponibles dans cette version partagée.' : 'Audio indisponible : une connexion internet est nécessaire pour les récitations.');
           done(false);
         };
         const pr = p.play();
