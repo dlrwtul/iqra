@@ -1,7 +1,7 @@
 name: Déployer sur GitHub Pages
+# Déclenchement manuel uniquement : la publication se fait depuis la branche gh-pages
+# (Settings → Pages → Deploy from a branch). Ce workflow sert si la source choisie est « GitHub Actions ».
 on:
-  push:
-    branches: [gh-pages]
   workflow_dispatch:
 permissions:
   contents: read
