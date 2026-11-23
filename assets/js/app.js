@@ -41,6 +41,15 @@
     },
     reload: () => route(),
 
+    /** Lien « ← retour » d'une sous-page : vers la page d'où l'on vient si c'est une page principale, sinon vers le parent. */
+    lastPage: '',
+    backLink(parentHref, parentLabel) {
+      const LABELS = { '#accueil': 'Accueil', '#plus': 'Plus', '#parcours': 'Parcours', '#lecture': 'Lecture', '#mots': 'Mes mots' };
+      const here = '#' + decodeURIComponent(location.hash.replace(/^#\/?/, ''));
+      const from = app.lastPage && app.lastPage !== here && LABELS[app.lastPage] ? app.lastPage : parentHref;
+      return '<a class="back" href="' + from + '">' + icon('left') + ' ' + U.esc(LABELS[from] || parentLabel) + '</a>';
+    },
+
     applySettings() {
       const st = Store.state.settings;
       const html = document.documentElement;
@@ -165,16 +174,23 @@
     const old = document.getElementById('view');
     const view = old.cloneNode(false);
     old.replaceWith(view);
-    document.body.classList.toggle('focus-mode', !!match && match.mode === 'focus');
-    Timer.setActive(!!match && (match.mode === 'focus' || match.mode === 'study'));
     U.$$('[data-tab]').forEach((a) => a.classList.toggle('active', !!match && a.dataset.tab === match.tab));
+    let mode = match ? match.mode : '';
     try {
-      if (match) match.fn(view, match.arg);
-      else V.notFound(view);
+      if (match) {
+        // Une page d'étude sans rien à étudier (révisions vides…) renvoie 'page' : barres de navigation visibles.
+        if (match.fn(view, match.arg) === 'page') mode = '';
+      } else V.notFound(view);
     } catch (e) {
       console.error(e);
+      mode = '';
       view.innerHTML = '<section class="center-msg card"><h2>Oups, une erreur est survenue</h2><p class="muted">' + U.esc(e.message) + '</p><a class="btn btn-primary" href="#accueil">Accueil</a></section>';
     }
+    document.body.classList.toggle('focus-mode', mode === 'focus');
+    Timer.setActive(mode === 'focus' || mode === 'study');
+    // Dernière page « normale » visitée : c'est là que ramène le bouton retour des pages d'étude.
+    // (Les pages d'étude vides n'en font pas partie : y revenir ne mènerait nulle part.)
+    if (!match || match.mode !== 'focus') app.lastPage = '#' + (path || 'accueil');
     window.scrollTo(0, 0);
     updateChips();
     IQRA.LocalDB.daily();

@@ -5,9 +5,11 @@
   const V = (IQRA.views = IQRA.views || {});
   const icon = ui.icon;
 
-  function focusBar(title, closeHref, extra) {
+  /** Barre des pages d'étude. Le bouton retour ramène à la dernière page visitée (à défaut : backHref). */
+  function focusBar(title, backHref, extra) {
+    const href = IQRA.app.lastPage || backHref;
     return (
-      '<div class="focus-bar"><a class="btn-icon" href="' + closeHref + '" aria-label="Quitter">' + icon('x') + '</a>' +
+      '<div class="focus-bar"><a class="btn-icon focus-back" href="' + href + '" aria-label="Retour" title="Retour">' + icon('left') + '</a>' +
       '<div class="focus-title">' + title + '</div><div class="focus-extra">' + (extra || '') + '</div></div>'
     );
   }
@@ -319,6 +321,7 @@
       '<div class="row gap wrap center">' + IQRA.app.sessionNextButton('review') +
       (known >= 4 ? '<a class="btn btn-primary" href="#entrainement">' + icon('target') + ' Entraînement libre</a><a class="btn btn-ghost" href="#chrono">' + icon('clock') + ' Défi chrono</a>' : '<a class="btn btn-primary" href="#parcours">Aller au parcours</a>') +
       '</div></section>';
+    return 'page';
   };
 
   /* ================================================================ ENTRAÎNEMENT LIBRE */
@@ -326,7 +329,7 @@
     const ids = SRS.knownIds();
     if (ids.length < 4) {
       root.innerHTML = '<section class="center-msg card"><h2>Apprenez d’abord quelques mots</h2><p class="muted">L’entraînement libre utilise les mots de vos leçons terminées.</p><a class="btn btn-primary" href="#parcours">Aller au parcours</a></section>';
-      return;
+      return 'page';
     }
     root.innerHTML = focusBar('Entraînement libre', '#plus') + '<div class="ex-host"></div>';
     // priorité aux mots fragiles (intervalle court, oublis)
