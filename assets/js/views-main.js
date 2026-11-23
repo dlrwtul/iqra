@@ -182,7 +182,7 @@
   V.words = function (root) {
     const counts = SRS.counts();
     root.innerHTML =
-      '<section class="words"><header class="page-head"><h1>Mes mots</h1><p class="muted">' + U.num(IQRA.vocab.length) + ' éléments : ' + IQRA.vocab.filter((w) => w.k === 'w').length + ' mots, ' + IQRA.vocab.filter((w) => w.k === 'a').length + ' préfixes et ' + IQRA.vocab.filter((w) => w.k === 's').length + ' pronoms suffixes. Classés par leçon ou par fréquence dans le Coran.</p></header>' +
+      '<section class="words">' + IQRA.app.backLink('#plus', 'Plus') + '<header class="page-head"><h1>Mes mots</h1><p class="muted">' + U.num(IQRA.vocab.length) + ' éléments : ' + IQRA.vocab.filter((w) => w.k === 'w').length + ' mots, ' + IQRA.vocab.filter((w) => w.k === 'a').length + ' préfixes et ' + IQRA.vocab.filter((w) => w.k === 's').length + ' pronoms suffixes. Classés par leçon ou par fréquence dans le Coran.</p></header>' +
       '<div class="stat-row">' +
       '<div class="stat"><b>' + counts.total + '</b><span>appris</span></div>' +
       '<div class="stat"><b>' + counts.learning + '</b><span>en apprentissage</span></div>' +
@@ -276,7 +276,7 @@
       ['clock', 'Des séances courtes et chronométrées', 'Une séance de 15 à 20 minutes par jour : révisions, nouvelle leçon, lecture. Le chronomètre ne compte que le temps d’étude active, l’objectif quotidien et la série entretiennent la régularité.']
     ];
     root.innerHTML =
-      '<section class="method"><header class="page-head"><h1>La méthode Iqra</h1><p class="muted">Inspirée des approches les plus efficaces : apprentissage par fréquence (type « Understand Quran »), répétition espacée, rappel actif, enseignement par racines et lecture du texte réel.</p></header>' +
+      '<section class="method">' + IQRA.app.backLink('#plus', 'Plus') + '<header class="page-head"><h1>La méthode Iqra</h1><p class="muted">Inspirée des approches les plus efficaces : apprentissage par fréquence (type « Understand Quran »), répétition espacée, rappel actif, enseignement par racines et lecture du texte réel.</p></header>' +
       '<div class="pillars">' + pillars.map((p) => '<div class="card pillar"><span class="tile-ic">' + icon(p[0]) + '</span><h3>' + p[1] + '</h3><p>' + U.esc(p[2]) + '</p></div>').join('') + '</div>' +
       '<div class="card"><h2>Votre routine quotidienne (15 à 20 min)</h2><ol class="routine">' +
       '<li><b>Révisions — 5 min.</b> Les cartes du jour d’abord : c’est là que se joue la mémoire à long terme. Soyez honnête : « Encore » si vous avez hésité longtemps.</li>' +
@@ -302,7 +302,7 @@
     const st = Store.state.settings;
     const opt = (v, cur, label) => '<option value="' + v + '"' + (String(v) === String(cur) ? ' selected' : '') + '>' + label + '</option>';
     root.innerHTML =
-      '<section class="settings"><header class="page-head"><h1>Réglages</h1></header>' +
+      '<section class="settings">' + IQRA.app.backLink('#plus', 'Plus') + '<header class="page-head"><h1>Réglages</h1></header>' +
       '<div class="card form">' +
       '<label class="field"><span>Objectif quotidien</span><select data-k="goal" data-num="1">' + [5, 10, 15, 20, 30, 45].map((m) => opt(m, st.goal, m + ' minutes')).join('') + '</select></label>' +
       '<label class="field"><span>Révisions maximum par séance</span><select data-k="maxReviews" data-num="1">' + [20, 40, 60, 100, 200].map((m) => opt(m, st.maxReviews, m + ' cartes')).join('') + '</select></label>' +
