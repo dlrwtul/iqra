@@ -177,6 +177,8 @@
     }
     window.scrollTo(0, 0);
     updateChips();
+    IQRA.LocalDB.daily();
+    IQRA.LocalDB.autoProtect();
     const h1 = view.querySelector('h1');
     document.title = (h1 && match && match.tab !== 'home' ? h1.textContent.trim() + ' · ' : '') + (IQRA.embedded ? 'Iqra' : 'Iqra — l’arabe du Coran');
   }
@@ -234,7 +236,11 @@
       } else updateChips();
     });
     route();
-    IQRA.Cloud.init();
+    // Base locale d'abord (la copie la plus récente l'emporte), puis compte claude.ai s'il y en a un.
+    IQRA.LocalDB.init().then(
+      () => IQRA.Cloud.init(),
+      () => IQRA.Cloud.init()
+    );
     if (!IQRA.embedded && 'serviceWorker' in navigator && /^https?:/.test(location.protocol) && !/localhost|127\.0\.0\.1/.test(location.hostname)) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
     }

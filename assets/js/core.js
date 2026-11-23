@@ -104,6 +104,7 @@
       } catch (e) {
         memoryFallback = raw;
       }
+      LocalDB.store(raw);
     },
     saveNow() {
       const print = fingerprint(this.state);
@@ -138,14 +139,182 @@
     importJSON(text) {
       const data = JSON.parse(text);
       if (!data || typeof data !== 'object' || !data.settings) throw new Error('Fichier invalide');
+      LocalDB.backup('import');
       this.state = merge(data);
       this.saveNow();
       Cloud.push();
     },
     reset() {
+      LocalDB.backup('reset');
       this.state = defaults();
       this.saveNow();
       Cloud.push();
+    },
+    /** Revient à une sauvegarde de la base locale (l'état actuel est sauvegardé avant). */
+    restore(raw) {
+      LocalDB.backup('restore');
+      this.state = merge(JSON.parse(raw));
+      this.saveNow();
+      Cloud.push();
+    },
+    /** Résumé lisible d'un état : mots appris, leçons terminées, points. */
+    summary(st) {
+      st = st || this.state;
+      return {
+        words: Object.keys(st.cards || {}).length,
+        lessons: Object.keys(st.lessons || {}).filter((k) => st.lessons[k] && st.lessons[k].done).length,
+        xp: st.xp || 0
+      };
+    }
+  });
+
+  /* ------------------------------------------------------------------ base locale (IndexedDB)
+     La progression vit dans une base IndexedDB « iqra » propre à ce navigateur, sans serveur :
+       kv/progress  : dernier état (copie rapide aussi dans localStorage pour un démarrage instantané) ;
+       backups      : une sauvegarde par jour (état du début de journée) et une avant chaque
+                      réinitialisation, import ou restauration — les 20 plus récentes sont gardées.
+     Si l'une des deux copies disparaît ou prend du retard, la plus récente l'emporte au démarrage. */
+  const MAX_BACKUPS = 20;
+  const LocalDB = (IQRA.LocalDB = {
+    db: null,
+    ok: false,
+    persisted: false,
+    asked: false,
+    _pending: null,
+    _writing: false,
+    open() {
+      if (this._open) return this._open;
+      this._open = new Promise((resolve) => {
+        let req;
+        try {
+          req = indexedDB.open('iqra', 1);
+        } catch (e) {
+          return resolve(null);
+        }
+        req.onupgradeneeded = () => {
+          const db = req.result;
+          if (!db.objectStoreNames.contains('kv')) db.createObjectStore('kv');
+          if (!db.objectStoreNames.contains('backups')) db.createObjectStore('backups', { keyPath: 'id' });
+        };
+        req.onsuccess = () => {
+          this.db = req.result;
+          this.ok = true;
+          // Une autre version de la base ouverte dans un autre onglet : on cède la place proprement.
+          this.db.onversionchange = () => this.db.close();
+          resolve(this.db);
+        };
+        req.onerror = () => resolve(null);
+        req.onblocked = () => resolve(null);
+      });
+      return this._open;
+    },
+    /** Exécute fn(store) dans une transaction et résout avec le résultat de la dernière requête. */
+    async run(name, mode, fn) {
+      const db = await this.open();
+      if (!db) return null;
+      return new Promise((resolve) => {
+        let out = null;
+        try {
+          const tx = db.transaction(name, mode);
+          const req = fn(tx.objectStore(name));
+          if (req) req.onsuccess = () => (out = req.result);
+          tx.oncomplete = () => resolve(out);
+          tx.onerror = tx.onabort = () => resolve(null);
+        } catch (e) {
+          resolve(null);
+        }
+      });
+    },
+    /** Enregistre le dernier état ; les écritures rapprochées sont regroupées. */
+    store(raw) {
+      this._pending = raw;
+      if (this._writing) return;
+      this._writing = true;
+      (async () => {
+        while (this._pending !== null) {
+          const r = this._pending;
+          this._pending = null;
+          await this.run('kv', 'readwrite', (s) => s.put(r, 'progress'));
+        }
+        this._writing = false;
+      })();
+    },
+    /** Sauvegarde l'état actuel. kind : 'day' (une par jour) ou la raison d'une sauvegarde avant action. */
+    async backup(kind) {
+      const st = Store.state;
+      const sum = Store.summary(st);
+      if (!sum.words && !sum.lessons && !sum.xp) return;
+      const raw = JSON.stringify(st); // copie immédiate, avant que l'état ne change
+      const now = Date.now();
+      const id = kind === 'day' ? 'day-' + U.dayKey(U.today()) : kind + '-' + now;
+      await this.run('backups', 'readwrite', (s) => s.put({ id, kind, at: now, raw, sum }));
+      const all = await this.backups();
+      if (all.length > MAX_BACKUPS) {
+        const extra = all.slice(MAX_BACKUPS).map((b) => b.id);
+        await this.run('backups', 'readwrite', (s) => {
+          extra.forEach((k) => s.delete(k));
+        });
+      }
+    },
+    /** Sauvegardes, de la plus récente à la plus ancienne. */
+    async backups() {
+      const list = (await this.run('backups', 'readonly', (s) => s.getAll())) || [];
+      return list.sort((a, b) => b.at - a.at);
+    },
+    /** Demande au navigateur de ne pas effacer la base pour libérer de la place. */
+    async protect() {
+      const sm = navigator.storage;
+      if (!sm || !sm.persist) return false;
+      try {
+        this.persisted = (await sm.persisted()) || (await sm.persist());
+      } catch (e) {
+        this.persisted = false;
+      }
+      return this.persisted;
+    },
+    /** Démarrage : réconcilie localStorage et IndexedDB, puis fait la sauvegarde du jour. */
+    async init() {
+      const db = await this.open();
+      if (!db) return;
+      try {
+        if (navigator.storage && navigator.storage.persisted) this.persisted = await navigator.storage.persisted();
+      } catch (e) {
+        /* sans importance */
+      }
+      const raw = await this.run('kv', 'readonly', (s) => s.get('progress'));
+      let saved = null;
+      try {
+        saved = raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        saved = null;
+      }
+      const local = Store.state;
+      const localEmpty = !Store.summary(local).xp && !Object.keys(local.cards).length;
+      if (saved && ((saved.updated || 0) > (local.updated || 0) || (localEmpty && Store.summary(saved).xp))) {
+        Store.adopt(saved, saved.updated);
+        IQRA.app.applySettings();
+        IQRA.app.reload();
+        if (localEmpty) IQRA.ui.toast('Progression récupérée depuis la base locale.', 'ok');
+      } else {
+        this.store(JSON.stringify(local));
+      }
+      await this.daily();
+    },
+    /** Sauvegarde du jour (état du début de journée), une seule fois par jour. */
+    async daily() {
+      const key = 'day-' + U.dayKey(U.today());
+      if (!this.ok || this._day === key) return;
+      const s = Store.summary();
+      if (!s.words && !s.lessons && !s.xp) return; // rien à sauvegarder : on réessaiera après les premiers progrès
+      this._day = key;
+      const n = await this.run('backups', 'readonly', (s) => s.count(key));
+      if (!n) await this.backup('day');
+    },
+    /** Après les premiers progrès, demande une fois au navigateur de protéger la base. */
+    autoProtect() {
+      if (this.asked || this.persisted || IQRA.embedded || !Store.state.xp) return;
+      this.asked = true;
+      this.protect();
     }
   });
   Store.save = U.debounce(() => Store.saveNow(), 400);

@@ -295,6 +295,9 @@
   };
 
   /* ---------------------------------------------------------------- réglages */
+  const plural = (n, one, many) => n + ' ' + (n > 1 ? many : one);
+  const dbSummary = (s) => plural(s.words, 'mot', 'mots') + ' · ' + plural(s.lessons, 'leçon terminée', 'leçons terminées') + ' · ' + plural(s.xp, 'point', 'points');
+
   V.settings = function (root) {
     const st = Store.state.settings;
     const opt = (v, cur, label) => '<option value="' + v + '"' + (String(v) === String(cur) ? ' selected' : '') + '>' + label + '</option>';
@@ -317,15 +320,86 @@
       '<p class="muted small">' + (Audio.ttsReady ? 'Voix arabe détectée : ' + U.esc(Audio.voice.name) + '.' : 'Aucune voix arabe de synthèse sur cet appareil : la récitation coranique du mot est utilisée à la place.') + '</p>' +
       '<div class="row gap wrap"><button class="btn btn-ghost btn-sm" data-say="بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ" data-loc="1:1:1">' + icon('sound') + ' Tester la voix</button>' +
       '<button class="btn btn-ghost btn-sm" data-verse="1:1">' + icon('play') + ' Tester la récitation</button></div></div>' +
-      '<div class="card form"><h3>Sauvegarde</h3><p class="muted small">' +
+      '<div class="card form"><h3>Vos données</h3><p class="muted small">' +
       (IQRA.Cloud.status === 'synced'
-        ? 'Votre progression est enregistrée dans votre compte claude.ai : vous la retrouvez sur tous vos appareils. Vous pouvez aussi l’exporter dans un fichier.'
-        : 'Votre progression est enregistrée dans ce navigateur. Exportez-la pour la conserver ou la transférer sur un autre appareil.') +
+        ? 'Votre progression est enregistrée dans votre compte claude.ai : vous la retrouvez sur tous vos appareils. Une copie est aussi gardée dans la base locale de ce navigateur.'
+        : 'Votre progression est enregistrée dans une base de données locale, sur cet appareil : rien n’est envoyé sur internet. Pour continuer sur un autre appareil, exportez-la puis importez le fichier là‑bas.') +
       '</p>' +
+      '<p class="db-sum">' + dbSummary(Store.summary()) + '</p>' +
+      '<div class="db-prot small" id="dbprot"></div>' +
       '<div class="row gap wrap"><button class="btn btn-ghost" id="exp">' + icon('download') + ' Exporter</button>' +
       '<label class="btn btn-ghost">' + icon('upload') + ' Importer<input type="file" accept="application/json,.json" id="imp" hidden></label>' +
       '<button class="btn btn-danger-ghost" id="rst">' + icon('trash') + ' Tout réinitialiser</button></div></div>' +
+      '<div class="card form" id="bkcard" hidden><h3>Sauvegardes automatiques</h3>' +
+      '<p class="muted small">Une sauvegarde chaque jour, et une avant chaque réinitialisation, import ou restauration (les 20 plus récentes).</p>' +
+      '<ul class="backups" id="bk"></ul></div>' +
       '</section>';
+
+    /* base locale : protection et sauvegardes (chargées après coup) */
+    const LDB = IQRA.LocalDB;
+    const prot = U.$('#dbprot', root);
+    const renderProt = () => {
+      if (!LDB.ok) {
+        prot.innerHTML = '<p class="muted">Base locale indisponible dans ce navigateur (navigation privée ?) : la progression est gardée dans son stockage simple.</p>';
+        return;
+      }
+      if (LDB.persisted) {
+        prot.innerHTML = '<p class="db-ok">' + icon('lock') + ' Protégée : le navigateur ne l’effacera pas pour faire de la place.</p>';
+        return;
+      }
+      prot.innerHTML =
+        '<p class="muted">Non protégée : le navigateur peut l’effacer s’il manque de place, ou après une longue absence sur iPhone et iPad. Le plus sûr : installer Iqra sur l’écran d’accueil.</p>' +
+        (navigator.storage && navigator.storage.persist && !IQRA.embedded ? '<button class="btn btn-ghost btn-sm" id="protect">' + icon('lock') + ' Protéger mes données</button>' : '');
+      const b = U.$('#protect', prot);
+      if (b)
+        b.addEventListener('click', async () => {
+          const ok = await LDB.protect();
+          renderProt();
+          ui.toast(ok ? 'Base locale protégée.' : 'Le navigateur a refusé. Installez Iqra sur l’écran d’accueil, puis réessayez.', ok ? 'ok' : 'warn', 4000);
+        });
+    };
+    const KIND = { day: 'début de journée', reset: 'avant réinitialisation', import: 'avant import', restore: 'avant restauration' };
+    const when = (b) => {
+      const d = new Date(b.at);
+      const day = d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+      return b.kind === 'day' ? day : day + ', ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    };
+    const renderBackups = async () => {
+      const list = await LDB.backups();
+      if (!root.isConnected) return;
+      const card = U.$('#bkcard', root);
+      card.hidden = !LDB.ok;
+      U.$('#bk', root).innerHTML = list.length
+        ? list
+            .map(
+              (b) =>
+                '<li><div><strong>' + U.esc(when(b)) + '</strong> <span class="muted small">· ' + (KIND[b.kind] || '') + '</span>' +
+                '<div class="muted small">' + dbSummary(b.sum) + '</div></div>' +
+                '<button class="btn btn-ghost btn-sm" data-bk="' + U.esc(b.id) + '">Restaurer</button></li>'
+            )
+            .join('')
+        : '<li class="muted small">Aucune sauvegarde pour l’instant : la première sera faite après vos premiers progrès.</li>';
+      U.$$('[data-bk]', root).forEach((btn) =>
+        btn.addEventListener('click', async () => {
+          const b = list.find((x) => x.id === btn.dataset.bk);
+          if (!b || !(await ui.confirm('Revenir à la sauvegarde du ' + when(b) + ' ? Votre progression actuelle sera sauvegardée avant.', 'Restaurer'))) return;
+          try {
+            Store.restore(b.raw);
+          } catch (err) {
+            ui.toast('Sauvegarde illisible.', 'warn');
+            return;
+          }
+          IQRA.app.applySettings();
+          ui.toast('Sauvegarde restaurée.', 'ok');
+          IQRA.app.go('#accueil');
+        })
+      );
+    };
+    LDB.open().then(() => {
+      if (!root.isConnected) return;
+      renderProt();
+      renderBackups();
+    });
 
     root.addEventListener('change', (e) => {
       const el = e.target;
@@ -384,7 +458,10 @@
       });
     });
     U.$('#rst', root).addEventListener('click', async () => {
-      if (await ui.confirm('Effacer toute votre progression ? Cette action est irréversible.', 'Tout effacer')) {
+      const msg = IQRA.LocalDB.ok
+        ? 'Effacer toute votre progression ? Une copie sera gardée dans les sauvegardes automatiques.'
+        : 'Effacer toute votre progression ? Cette action est irréversible.';
+      if (await ui.confirm(msg, 'Tout effacer')) {
         Store.reset();
         IQRA.app.applySettings();
         ui.toast('Progression réinitialisée.', 'ok');

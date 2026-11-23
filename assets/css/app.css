@@ -572,6 +572,15 @@ body.focus-mode #view { max-width: 760px; padding-top: 0; }
 .field.switch input::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform 0.15s; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); }
 .field.switch input:checked { background: var(--primary); }
 .field.switch input:checked::after { transform: translateX(18px); }
+.db-sum { font-weight: 600; margin: 4px 0 6px; }
+.db-prot { margin-bottom: 14px; }
+.db-prot p { margin: 0 0 8px; }
+.db-ok { display: flex; align-items: center; gap: 6px; color: var(--ok); font-weight: 600; }
+.db-ok .ic { width: 16px; height: 16px; flex: none; }
+.backups { list-style: none; margin: 0; padding: 0; }
+.backups li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); }
+.backups li:first-child { border-top: 0; padding-top: 0; }
+.backups .btn { flex: none; }
 
 /* ------------------------------------------------------------------ lecture */
 .passages { display: grid; gap: 12px; grid-template-columns: 1fr; }

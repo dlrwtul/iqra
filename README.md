@@ -47,7 +47,7 @@ L’accueil propose une séance guidée en trois étapes : **révisions** (≈ 5
 - **Défi chrono** et **entraînement libre**.
 - **Hors ligne** (application installable, PWA). L’audio nécessite une connexion.
 - Thème clair/sombre, taille du texte arabe réglable, translittération optionnelle.
-- Progression enregistrée dans le navigateur, avec export et import en fichier JSON.
+- Progression enregistrée dans une base de données locale du navigateur (IndexedDB, avec une copie rapide dans localStorage), sans serveur : sauvegarde automatique chaque jour et avant chaque réinitialisation, import ou restauration (restaurables depuis les Réglages), protection contre l’effacement automatique quand le navigateur l’accorde, export et import en fichier JSON.
 
 ## Lancer le site
 
